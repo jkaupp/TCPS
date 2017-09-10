@@ -65,19 +65,96 @@ lever_scatter <- function(x) {
 }
 
 
-lever_scale <- function(x) {
+likert_scale <- function(x, choice) {
 
-  plot_data <- x %>%
-    dplyr::select_(~survey, ~PartNum, ~dplyr::contains("agree"), ~dplyr::contains("imp")) %>%
-    tidyr::gather_("lever", "value", colnames(.)[!grepl("PartNum|survey", colnames(.))]) %>%
-    dplyr::mutate_(lever_type = ~stringi::stri_extract_first_regex(lever, "\\bagree|\\bimp"),
-                   lever = ~stringi::stri_replace_first_regex(lever, "\\bagree|\\bimp", "")) %>%
-    tidyr::spread_("lever_type", "value") %>%
-    dplyr::filter(complete.cases(.)) %>%
-    dplyr::mutate_(color = ~dplyr::if_else(imp/agree > 1, "above", "below")) %>%
-    dplyr::mutate_(lever = ~.levers[lever])
+  type <- unique(x[["survey"]])
 
+  questions <- dplyr::filter_(.faculty_levers, ~lever == choice, ~survey == type) %>%
+    tidyr::unnest_("questions") %>%
+    dplyr::select_(~questions) %>%
+    purrr::flatten_chr()
 
+  scales <- dplyr::filter_(x, ~item %in% questions)
 
+  scale_bar <- scale_likert(scales)
+
+  ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
+  ggplot2::update_geom_defaults("text", list(family = "Lato"))
+
+  plot(scale_bar, colors = viridisLite::viridis(5), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
+    theme_tcps(grid = FALSE) +
+    ggplot2::labs(title = type,
+                  y = "Percent of response") +
+    ggplot2::theme(strip.text.x = ggplot2::element_text(hjust = 0.5, size = 14),
+                   axis.text.x = ggplot2::element_blank(),
+                   axis.text.y = ggplot2::element_text(size = 14),
+                   plot.title = ggplot2::element_text(size = 18),
+                   legend.position = "none")
 
 }
+
+lever_scale <- function(df, choice) {
+
+  plots <- df %>%
+    split(.[["survey"]]) %>%
+    purrr::map(~likert_scale(.x, choice))
+
+    gridExtra::grid.arrange(grobs = plots, ncol = 3)
+
+}
+
+lever_joyplot <- function(x, aggregate) {
+
+  plot_data <- x %>%
+    dplyr::filter_(~type == "lever") %>%
+    dplyr::mutate_(item = ~.levers[item],
+                   scale = ~tools::toTitleCase(scale))
+
+  plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = value, y = item, fill = scale)) +
+    ggjoy::geom_joy(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15) +
+    ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(1,6), breaks = 1:5, labels = stringr::str_wrap(c("Not at All", "Very Little", "Somewhat", "Quite a Bit", "A Great Deal"), 7)) +
+    ggplot2::scale_y_discrete(expand = c(0, 0), labels = function(x) stringr::str_wrap(x, 15)) +
+    ggplot2::scale_fill_manual("", values = c("#F6D600","#11CD86")) +
+    ggplot2::scale_color_manual("", values = c("#F6D600","#11CD86")) +
+    ggplot2::labs(x = NULL, y = NULL, title = NULL) +
+    theme_tcps(grid = "XY") +
+    ggplot2::theme(legend.position = "none")
+
+  #c("#E74C3C","#3498DB")
+
+  if (!aggregate) {
+
+    plot +  ggplot2::facet_wrap(~survey)
+
+  } else {
+
+    plot
+  }
+
+}
+
+
+lever_scale2 <- function(x, choice) {
+
+  questions <- dplyr::filter_(.faculty_levers, ~lever == choice) %>%
+    tidyr::unnest_("questions") %>%
+    dplyr::select_(~questions) %>%
+    purrr::flatten_chr()
+
+  scales <- dplyr::filter_(x, ~item %in% questions) %>%
+    dplyr::left_join(.questions, by = c("item" = "question")) %>%
+    dplyr::mutate_(prompt = ~tools::toTitleCase(prompt))
+
+  ggplot2::ggplot(scales, ggplot2::aes(x = value, y = prompt, fill = scale)) +
+    ggjoy::geom_joy(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.4, scale = 2) +
+    ggplot2::scale_color_manual(values = c("#E74C3C","#3498DB"), labels = c("Agreement","Importance")) +
+    ggplot2::scale_fill_manual(values = c("#E74C3C","#3498DB"), labels = c("Agreement","Importance")) +
+    ggplot2::scale_x_continuous(expand = c(0, 0), limits = c(0,6), breaks = c(1:5), labels = stringr::str_wrap(c("Not at All", "Very Little", "Somewhat", "Quite a Bit", "A Great Deal"), 7)) +
+    ggplot2::scale_y_discrete(expand = c(0, 0), labels = function(x) stringr::str_wrap(x, 35)) +
+    ggplot2::labs(x = NULL, y = NULL, title = NULL, subtitle = NULL) + #.levers[[choice]]
+    theme_tcps(grid = "XY") +
+    ggplot2::facet_wrap(~survey) +
+    ggplot2::theme(legend.position = "none")
+
+}
+
