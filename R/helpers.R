@@ -20,13 +20,6 @@ scale_likert <- function(x){
     dplyr::select_(~dplyr::matches("scale|\\d+")) %>%
     stats::setNames(c("scale", sprintf("Q%s", names(.)[-1])))
 
-  # %>%
-  #   dplyr::mutate_at(.cols = dplyr::vars(contains("Q")),
-  #                    function(x) forcats::fct_recode(x, "Low" = "Not at All",
-  #                                                    "Low" = "Very Little",
-  #                                                    "Neutral" = "Somewhat",
-  #                                                    "High" = "Quite a Bit",
-  #                                                    "High" = "A Great Deal"))
 
   item_names <- dplyr::filter_(.questions, ~question %in% names(plot_data)) %>%
      dplyr::select_(~prompt) %>%

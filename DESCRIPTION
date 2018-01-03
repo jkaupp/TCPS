@@ -15,4 +15,5 @@ Imports: haven,
     purrr,
     stringi,
     ggplot2,
-    ggalt
+    ggalt,
+    ggridges

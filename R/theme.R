@@ -1,6 +1,6 @@
-#' theme_nsse
+#' theme_tcps
 #'
-#' Custom ggplot2 theme for NSSE Package
+#' Custom ggplot2 theme for the TCPS Package
 #' heavy credits for influencing the theme function
 #' go to @@hrbrmstr (Bob Rudis)
 #'
@@ -30,15 +30,15 @@
 #' @param ticks ticks
 #' @export
 
-theme_tcps <- function(base_family="Lato",
-                       base_size = 10,
+theme_tcps <- function(base_family="Oswald-Light",
+                       base_size = 11,
                        strip_text_family = base_family,
                        strip_text_size = 12,
-                       plot_title_family="Lato",
+                       plot_title_family="Oswald-Light",
                        plot_title_size = 16,
                        plot_title_margin = 10,
-                       subtitle_family="Playfair Display",
-                       subtitle_size = 10,
+                       subtitle_family="Oswald-Light",
+                       subtitle_size = 12,
                        subtitle_margin = 15,
                        caption_family="Playfair Display",
                        caption_size = 9,
