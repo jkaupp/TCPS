@@ -33,11 +33,18 @@ likert_scale <- function(x, choice) {
 
 lever_scale <- function(df, choice) {
 
-  plots <- df %>%
-    split(.[["survey"]]) %>%
-    purrr::map(~likert_scale(.x, choice))
+  cols <- length(unique(df[["survey"]]))
 
-    gridExtra::grid.arrange(grobs = plots, ncol = 3)
+  if (cols > 1) {
+
+    plots <- df %>%
+      split(.[["survey"]]) %>%
+      purrr::map(~likert_scale(.x, choice))
+
+    gridExtra::grid.arrange(grobs = plots, ncol = cols)
+  } else {
+    likert_scale(df, choice)
+  }
 
 }
 

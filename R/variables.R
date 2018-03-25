@@ -134,3 +134,8 @@
       "research on teaching is recognized in the evaluation of instructor job performance"
     )
   )
+
+
+pal_one <- c("#F6D600","#11CD86")
+pal_two <- c("#ffdf50","#00a7f5")
+pal_three <- c("#091971","#80eb84")

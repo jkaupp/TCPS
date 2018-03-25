@@ -16,9 +16,8 @@ data %>%
 
 
 
-filter(data, survey == "Staff", item == "instinit")
-
-lever_scale(data, "instinit")
+filter(data, survey == "Staff", item == "Q7") %>%
+  lever_scale("instinit")
 
 p + scale_fill_manual("", values = c(grey.colors(2))) +
   scale_y_discrete(expand = c(0,0)) +
