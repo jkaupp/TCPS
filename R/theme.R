@@ -26,7 +26,7 @@
 #' @param axis_title_just axis title font justification \code{blmcrt}
 #' @param grid panel grid (\code{TRUE}, \code{FALSE}, or a combination of
 #'        \code{X}, \code{x}, \code{Y}, \code{y})
-#' @param axis axis \code{TRUE}, \code{FALSE}, [\code{xy}]
+#' @param axis axis \code{TRUE}, \code{FALSE}, \code{xy}
 #' @param ticks ticks
 #' @export
 

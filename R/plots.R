@@ -1,13 +1,13 @@
 likert_scale <- function(x, choice) {
 
-  type <- unique(x[["survey"]])
+  type <- quo(unique(x[["survey"]]))
 
-  questions <- dplyr::filter_(.faculty_levers, ~lever == choice, ~survey == type) %>%
-    tidyr::unnest_("questions") %>%
-    dplyr::select_(~questions) %>%
+  questions <- dplyr::filter(.faculty_levers, .data$lever == choice, .data$survey == UQ(type)) %>%
+    tidyr::unnest("questions") %>%
+    dplyr::select(.data$questions) %>%
     purrr::flatten_chr()
 
-  scales <- dplyr::filter_(x, ~item %in% questions)
+  scales <- dplyr::filter(x, .data$item %in% questions)
 
   counts <- dplyr::n_distinct(scales[["PartNum"]])
 
@@ -18,7 +18,7 @@ likert_scale <- function(x, choice) {
   ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
   ggplot2::update_geom_defaults("text", list(family = "Lato"))
 
-  plot(scale_bar, colors = viridisLite::viridis(5), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
+  graphics::plot(scale_bar, colors = viridisLite::viridis(5), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
     theme_tcps(grid = FALSE) +
     ggplot2::labs(title = title,
                   y = NULL,
@@ -37,8 +37,7 @@ lever_scale <- function(df, choice) {
 
   if (cols > 1) {
 
-    plots <- df %>%
-      split(.[["survey"]]) %>%
+    plots <- split(df, df[["survey"]]) %>%
       purrr::map(~likert_scale(.x, choice))
 
     gridExtra::grid.arrange(grobs = plots, ncol = cols)
@@ -51,21 +50,21 @@ lever_scale <- function(df, choice) {
 lever_ridgeline <- function(x, aggregate) {
 
   plot_data <- x %>%
-    dplyr::filter_(~type == "lever") %>%
-    dplyr::mutate_(item = ~.levers[item],
-                   scale = ~tools::toTitleCase(scale))
+    dplyr::filter(.data$type == "lever") %>%
+    dplyr::mutate(item = .levers[.data$item],
+                   scale = tools::toTitleCase(.data$scale))
 
   order <- plot_data %>%
-    dplyr::group_by_(~item, ~scale) %>%
-    dplyr::summarize_(mean = ~mean(value, na.rm = TRUE)) %>%
-    dplyr::transmute_(diff = ~diff(mean)) %>%
+    dplyr::group_by(.data$item, .data$scale) %>%
+    dplyr::summarize(mean = mean(.data$value, na.rm = TRUE)) %>%
+    dplyr::transmute(diff = ~diff(mean)) %>%
     dplyr::ungroup() %>%
-    dplyr::distinct_(~item, ~diff) %>%
-    dplyr::arrange_(~diff) %>%
-    dplyr::select_(~item) %>%
+    dplyr::distinct(.data$item, .data$diff) %>%
+    dplyr::arrange(.data$diff) %>%
+    dplyr::select(.data$item) %>%
     purrr::flatten_chr()
 
-  plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = value, y = item, fill = scale)) +
+  plot <- ggplot2::ggplot(plot_data, ggplot2::aes_(x = ~value, y = ~item, fill = ~scale)) +
     ggridges::geom_density_ridges(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15) +
     ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(1,6), breaks = c(1,3,5), labels = stringr::str_wrap(c("Less Emphasis", "Neutral", "More Emphasis"), 7)) +
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
@@ -79,8 +78,8 @@ lever_ridgeline <- function(x, aggregate) {
 
     counts <- plot_data %>%
       #dplyr::filter_(~!is.na(value)) %>%
-      dplyr::group_by_(~survey) %>%
-      dplyr::summarize_(n = ~dplyr::n_distinct(PartNum))
+      dplyr::group_by(.data$survey) %>%
+      dplyr::summarize(n = dplyr::n_distinct(.data$PartNum))
 
     counts <- purrr::set_names(counts$n, counts$survey)
 
@@ -91,15 +90,16 @@ lever_ridgeline <- function(x, aggregate) {
   } else {
 
     counts <- plot_data %>%
-      dplyr::group_by_(~survey) %>%
-      dplyr::summarize_(n = ~dplyr::n_distinct(PartNum)) %>%
+      dplyr::group_by(.data$survey) %>%
+      dplyr::summarize(n = dplyr::n_distinct(.data$PartNum)) %>%
       dplyr::ungroup() %>%
-      dplyr::summarize(n = sum(n)) %>%
+      dplyr::summarize(n = sum(.data$n)) %>%
       purrr::flatten_chr()
 
     plot + ggplot2::labs(subtitle = sprintf("Queen's (%s)",counts))
   }
 
 }
+
 
 

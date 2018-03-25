@@ -1,5 +1,5 @@
 .levers <-
-  stats::setNames(
+  purrr::set_names(
     c(
       "Institutional Initiatives",
       "Assessment of Teaching",
