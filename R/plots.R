@@ -3,9 +3,8 @@ likert_scale <- function(x, choice) {
   type <- quo(unique(x[["survey"]]))
 
   questions <- dplyr::filter(.faculty_levers, .data$lever == choice, .data$survey == UQ(type)) %>%
-    tidyr::unnest("questions") %>%
-    dplyr::select(.data$questions) %>%
-    purrr::flatten_chr()
+    tidyr::unnest(questions) %>%
+    dplyr::pull(.data$questions)
 
   scales <- dplyr::filter(x, .data$item %in% questions)
 
@@ -13,7 +12,7 @@ likert_scale <- function(x, choice) {
 
   scale_bar <- scale_likert(scales)
 
-  title <- sprintf("%s (%s)", type, counts)
+  title <- sprintf("%s (%s)", unique(x[["survey"]]), counts)
 
   ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
   ggplot2::update_geom_defaults("text", list(family = "Lato"))
@@ -57,7 +56,7 @@ lever_ridgeline <- function(x, aggregate) {
   order <- plot_data %>%
     dplyr::group_by(.data$item, .data$scale) %>%
     dplyr::summarize(mean = mean(.data$value, na.rm = TRUE)) %>%
-    dplyr::transmute(diff = ~diff(mean)) %>%
+    dplyr::transmute(diff = diff(.data$mean)) %>%
     dplyr::ungroup() %>%
     dplyr::distinct(.data$item, .data$diff) %>%
     dplyr::arrange(.data$diff) %>%
