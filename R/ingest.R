@@ -8,7 +8,7 @@ read_tcps <- function(x){
 
   srvy <- rlang::quo(unique(data[["survey"]]))
 
-  selection <- dplyr::filter(.faculty_levers, .data$survey == !!srvy)
+  selection <- dplyr::filter(.faculty_levers, .data$survey == UQ(srvy))
 
   selection$data <- list(data)
 

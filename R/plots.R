@@ -46,7 +46,7 @@ lever_scale <- function(df, choice) {
 
 }
 
-lever_ridgeline <- function(x, aggregate) {
+lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
 
   plot_data <- x %>%
     dplyr::filter(.data$type == "lever") %>%
@@ -67,8 +67,8 @@ lever_ridgeline <- function(x, aggregate) {
     ggridges::geom_density_ridges(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15) +
     ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(1,6), breaks = c(1,3,5), labels = stringr::str_wrap(c("Less Emphasis", "Neutral", "More Emphasis"), 7)) +
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
-    ggplot2::scale_fill_manual("", values = c("#F6D600","#11CD86")) +
-    ggplot2::scale_color_manual("", values = c("#F6D600","#11CD86")) +
+    ggplot2::scale_fill_manual("", values = pal) +
+    ggplot2::scale_color_manual("", values = pal) +
     ggplot2::labs(x = NULL, y = NULL, title = NULL) +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
