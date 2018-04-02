@@ -2,11 +2,24 @@ library(magrittr)
 library(purrr)
 library(dplyr)
 library(ggplot2)
+library(tidyr)
 
-files <- list.files(".", full.names = TRUE, pattern = "sav")
+files <- list.files("testing", full.names = TRUE, pattern = "sav")
 
 data <- files %>%
   map_df(~read_tcps(.x))
+
+
+data %>%
+  split(.$type) %>%
+  map_dfr(~spread(.x, item, value))
+
+data %>%
+  distinct(PartNum, item, type, scale, .keep_all = TRUE) %>%
+  View()
+
+  filter(type == "lever") %>%
+  spread(item, value)
 
 data %>%
   dplyr::filter_(~type == "lever") %>%
@@ -27,7 +40,9 @@ p + scale_fill_manual("", values = c(grey.colors(2))) +
         panel.grid.major = element_blank())
 
 
-lever_ridgeline(data, aggregate = TRUE) +
+lever_ridgeline(data, pal = pal_one)
+
++
   theme(legend.position = "none",
         axis.text.y = element_text(vjust = 0),
         panel.grid.major.x = element_line(linetype = "dashed"),

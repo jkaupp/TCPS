@@ -135,7 +135,14 @@
     )
   )
 
-
+#' Ridgeline palette one
+#' @export
 pal_one <- c("#F6D600","#11CD86")
+
+#' Ridgeline palette two
+#' @export
 pal_two <- c("#ffdf50","#00a7f5")
+
+#' Ridgeline palette three
+#' @export
 pal_three <- c("#091971","#80eb84")

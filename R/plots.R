@@ -1,3 +1,9 @@
+#' Create a likert scale plot for agreement and importance for a TCPS lever
+#'
+#' @param x input tidy TCPS data
+#' @param choice lever choice
+#'
+#' @return nify plot!
 likert_scale <- function(x, choice) {
 
   type <- quo(unique(x[["survey"]]))
@@ -6,9 +12,9 @@ likert_scale <- function(x, choice) {
     tidyr::unnest(questions) %>%
     dplyr::pull(.data$questions)
 
-  scales <- dplyr::filter(x, .data$item %in% questions)
+  scales <- dplyr::select(x, .data$survey, .data$part_num, .data$scale, questions)
 
-  counts <- dplyr::n_distinct(scales[["PartNum"]])
+  counts <- dplyr::n_distinct(scales[["part_num"]])
 
   scale_bar <- scale_likert(scales)
 
@@ -30,26 +36,43 @@ likert_scale <- function(x, choice) {
 
 }
 
-lever_scale <- function(df, choice) {
+#' Plot the likert scale for a TCPS lever
+#'
+#' @param x input tidy TCPS data
+#' @param choice lever choice
+#'
+#' @return nify plot!
+lever_scale <- function(x, choice) {
 
-  cols <- length(unique(df[["survey"]]))
+  cols <- length(unique(x[["survey"]]))
 
   if (cols > 1) {
 
-    plots <- split(df, df[["survey"]]) %>%
+    plots <- split(x, x[["survey"]]) %>%
       purrr::map(~likert_scale(.x, choice))
 
     gridExtra::grid.arrange(grobs = plots, ncol = cols)
   } else {
-    likert_scale(df, choice)
+    likert_scale(x, choice)
   }
 
 }
 
+#' Produce ridgeline plots for a TCPS lever.
+#'
+#' @param x input tidy TCPS data frame
+#' @param aggregate TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame
+#' @param pal a simple two color palette for agreement/importance in the plot.  There are three palette choices available, pal_one, pal_two and pal_three, which can be called as part of this package
+#'
+#' @return a nifty plot!
+#' @export
+#'
+#' @examples
 lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
 
   plot_data <- x %>%
-    dplyr::filter(.data$type == "lever") %>%
+    dplyr::select(-dplyr::contains("Q")) %>%
+    tidyr::gather("item", "value", .data$assessteach:.data$teachrec) %>%
     dplyr::mutate(item = .levers[.data$item],
                    scale = tools::toTitleCase(.data$scale))
 
@@ -60,8 +83,7 @@ lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
     dplyr::ungroup() %>%
     dplyr::distinct(.data$item, .data$diff) %>%
     dplyr::arrange(.data$diff) %>%
-    dplyr::select(.data$item) %>%
-    purrr::flatten_chr()
+    dplyr::pull(.data$item)
 
   plot <- ggplot2::ggplot(plot_data, ggplot2::aes_(x = ~value, y = ~item, fill = ~scale)) +
     ggridges::geom_density_ridges(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15) +
@@ -78,7 +100,7 @@ lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
     counts <- plot_data %>%
       #dplyr::filter_(~!is.na(value)) %>%
       dplyr::group_by(.data$survey) %>%
-      dplyr::summarize(n = dplyr::n_distinct(.data$PartNum))
+      dplyr::summarize(n = dplyr::n_distinct(.data$part_num))
 
     counts <- purrr::set_names(counts$n, counts$survey)
 
@@ -90,7 +112,7 @@ lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
 
     counts <- plot_data %>%
       dplyr::group_by(.data$survey) %>%
-      dplyr::summarize(n = dplyr::n_distinct(.data$PartNum)) %>%
+      dplyr::summarize(n = dplyr::n_distinct(.data$part_num)) %>%
       dplyr::ungroup() %>%
       dplyr::summarize(n = sum(.data$n)) %>%
       purrr::flatten_chr()
