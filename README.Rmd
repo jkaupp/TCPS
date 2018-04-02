@@ -1,24 +1,33 @@
+---
+output: github_document
+---
 
-Teaching Culture Perception Survey (TCPS) Project
-=================================================
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# Teaching Culture Perception Survey (TCPS) Project
 
 The goal of tcps package is to provide functionality to tidy and visualize the results of running the teaching culture perception survey at an institution.
 
-Installation
-------------
+## Installation
 
 You can install tcps from GitHub with:
 
-``` r
+```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("jkaupp/tcps")
 ```
 
-Example
--------
+## Example
 
 This is a basic example which shows you how to solve a common problem:
 
-``` r
+```{r example}
 ## basic example code
 ```
+

@@ -7,7 +7,7 @@ library(tidyr)
 files <- list.files("testing", full.names = TRUE, pattern = "sav")
 
 data <- files %>%
-  map_df(~read_tcps(.x))
+  map_df(~tidy_tcps(.x))
 
 
 data %>%
@@ -63,8 +63,22 @@ gen_scales <- function(data, scale) {
 
 walk(names(.levers), ~gen_scales(data, .x))
 
+replace_value <- function(x){
+
+  if( all(x %% 1 == 0)) {
+    floor(runif(length(x),1,5))
+
+  } else {
+    runif(length(x),1,5)
+    }
+}
 
 
+test <- data %>%
+  replace(is.na(.), 0)
+
+tcps_sample <- map_at(test, 4:46, replace_value) %>%
+    bind_cols()
 
 
 
