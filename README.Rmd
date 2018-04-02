@@ -23,11 +23,16 @@ You can install tcps from GitHub with:
 devtools::install_github("jkaupp/tcps")
 ```
 
-## Example
+## Using this package
 
-This is a basic example which shows you how to solve a common problem:
+At this point, the survey data is provided to institutions by contacting the Project Committee.  Data is provided to the instiution in the form of an SPSS file that contains all raw data, plus statistics and calculated levers.  The `tidy_tcps` function would be used in this case to clean up the file for plotting and other downstream analysis. It is difficult to show here as the SPSS files are unavailble to be shared due to institutional ethics clearance.
+
+However, to show the output for `tidy_tcps` and to illustrate the plotting functions, a  simulated data set was created.
 
 ```{r example}
-## basic example code
+data("tcps_sample")
+
+head(tcps_sample)
+
 ```
 
