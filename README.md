@@ -22,6 +22,9 @@ At this point, the survey data is provided to institutions by contacting the Pro
 However, to show the output for `tidy_tcps` and to illustrate the plotting functions, a simulated data set was created.
 
 ``` r
+
+library(tcps)
+
 data("tcps_sample")
 
 head(tcps_sample)
@@ -64,7 +67,6 @@ Ridgeline plots of levers
 The primary visualization for the 6 levers in the survey is a [ridgeline plot](http://blog.revolutionanalytics.com/2017/07/joyplots.html) that illustrates the distribution of the lever scores for each respondent for both agreement and importance. The arguments to the function are: \* `x` = tidy tcps data \* `lever` = optional lever selection as a string \* `pal` = length two vector of RGB hex colors (pal\_one, pal\_two, pal\_three are supplied in the package) \* `aggregate` = boolean TRUE/FALSE. If TRUE, it aggregates responses across all surveys present in the data (faculty, staff, student). If false it presents as a grid for each survey.
 
 ``` r
-library(tcps)
 lever_ridgeline(tcps_sample)
 #> Picking joint bandwidth of 0.237
 ```
