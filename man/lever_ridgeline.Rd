@@ -4,14 +4,16 @@
 \alias{lever_ridgeline}
 \title{Produce ridgeline plots for a TCPS lever.}
 \usage{
-lever_ridgeline(x, aggregate = FALSE, pal = pal_one)
+lever_ridgeline(x, lever = NULL, pal = pal_one, aggregate = FALSE)
 }
 \arguments{
 \item{x}{input tidy TCPS data frame}
 
-\item{aggregate}{TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame}
+\item{lever}{short name of the lever of interest}
 
-\item{pal}{a simple two color palette for agreement/importance in the plot.  There are three palettes available, pal_one, pal_two and pal_three}
+\item{pal}{a simple two color palette for agreement/importance in the plot.  There are three palette choices available, pal_one, pal_two and pal_three, which can be called as part of this package}
+
+\item{aggregate}{TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame}
 }
 \value{
 a nifty plot!

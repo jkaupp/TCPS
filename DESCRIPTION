@@ -1,12 +1,12 @@
 Package: tcps
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Visualize the Teaching Culture Perception Survey
 Version: 0.0.1
 Author: Jake Kaupp
 Maintainer: Jake Kaupp <jkaupp@gmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Visualize the Teaching Culture Perception Survey.
 License: MIT + file LICENSE
+Depends: R (>= 2.10)
 Encoding: UTF-8
 Imports: 
     haven,

@@ -28,3 +28,5 @@ tidy_tcps <- function(file){
     dplyr::select(.data$survey, .data$part_num, .data$scale, .data$assessteach, .data$brengage, .data$impteach, .data$infrastruct, .data$instinit, .data$teachrec, dplyr::pull(.questions,.data$question))
 
 }
+
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))

@@ -36,12 +36,13 @@ likert_scale <- function(x, choice) {
 
 }
 
-#' Plot the likert scale for a TCPS lever
+
+#' Produce the lever scale item visualization
 #'
-#' @param x input tidy TCPS data
-#' @param choice lever choice
+#' @param x the input tidy tcps data frame
+#' @param choice the short name for the lever scale
 #'
-#' @return nify plot!
+#' @return nify plot
 #' @export
 lever_scale <- function(x, choice) {
 
@@ -63,6 +64,7 @@ lever_scale <- function(x, choice) {
 #'
 #' @param x input tidy TCPS data frame
 #' @param aggregate TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame
+#' @param lever short name of the lever of interest
 #' @param pal a simple two color palette for agreement/importance in the plot.  There are three palette choices available, pal_one, pal_two and pal_three, which can be called as part of this package
 #'
 #' @return a nifty plot!

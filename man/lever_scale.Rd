@@ -2,18 +2,18 @@
 % Please edit documentation in R/plots.R
 \name{lever_scale}
 \alias{lever_scale}
-\title{Plot the likert scale for a TCPS lever}
+\title{Produce the lever scale item visualization}
 \usage{
 lever_scale(x, choice)
 }
 \arguments{
-\item{x}{input tidy TCPS data}
+\item{x}{the input tidy tcps data frame}
 
-\item{choice}{lever choice}
+\item{choice}{the short name for the lever scale}
 }
 \value{
-nify plot!
+nify plot
 }
 \description{
-Plot the likert scale for a TCPS lever
+Produce the lever scale item visualization
 }
