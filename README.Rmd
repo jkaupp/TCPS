@@ -7,7 +7,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  warnings = FALSE,
+  messages = FALSE
 )
 ```
 # Teaching Culture Perception Survey (TCPS) Project
@@ -21,6 +23,7 @@ You can install tcps from GitHub with:
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("jkaupp/tcps")
+library(tcps)
 ```
 
 ## Using this package
@@ -35,4 +38,32 @@ data("tcps_sample")
 head(tcps_sample)
 
 ```
+
+# Visualizations
+
+## Ridgeline plots of levers
+
+The primary visualization for the 6 levers in the survey is a [ridgeline plot](http://blog.revolutionanalytics.com/2017/07/joyplots.html) that illustrates the distribution of the lever scores for each respondent for both agreement and importance.  The arguments to the function are:
+ * `x` = tidy tcps data
+ * `lever` = optional lever selection as a string
+ * `pal` = length two vector of RGB hex colors (pal_one, pal_two, pal_three are supplied in the package)
+ * `aggregate` = boolean TRUE/FALSE.  If TRUE, it aggregates responses across all surveys present in the data (faculty, staff, student). If false it presents as a grid for each survey.
+
+```{r ridgeline}
+lever_ridgeline(tcps_sample)
+```
+
+You plot a single ridgeline by using the shortname for the lever as a string.  The shortnames and corresponding lever titles are available via `.levers`
+```{r single_ridgeline}
+lever_ridgeline(tcps_sample, lever = "instinit", pal = pal_two)
+```
+
+# Plotting Scale Items
+
+The distributions of each question comprising a scale can also be visualized as a stacked bar chart, disaplying the percentage of responses in each category.  
+
+```{r likert, fig.height = 10}
+lever_scale(tcps_sample, "instinit")
+```
+
 

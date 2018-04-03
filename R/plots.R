@@ -68,26 +68,43 @@ lever_scale <- function(x, choice) {
 #' @export
 #'
 #' @examples
-lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
+lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   plot_data <- x %>%
     dplyr::select(-dplyr::contains("Q")) %>%
-    tidyr::gather("item", "value", .data$assessteach:.data$teachrec) %>%
-    dplyr::mutate(item = .levers[.data$item],
-                   scale = tools::toTitleCase(.data$scale))
+    tidyr::gather("item", "value", .data$assessteach:.data$teachrec)
+
+  if (!is.null(lever)) {
+
+    lvr <- quo_name(lever)
+
+    plot_data <- filter(plot_data, item == lvr) %>%
+      dplyr::mutate(item = .levers[.data$item],
+                    scale = tools::toTitleCase(.data$scale))
+
+  } else {
+    plot_data <- plot_data %>%
+      dplyr::mutate(item = .levers[.data$item],
+                    scale = tools::toTitleCase(.data$scale))
+
+  }
+
+
+
+
 
   order <- plot_data %>%
     dplyr::group_by(.data$item, .data$scale) %>%
     dplyr::summarize(mean = mean(.data$value, na.rm = TRUE)) %>%
-    dplyr::transmute(diff = diff(.data$mean)) %>%
+    dplyr::mutate(diff = diff(.data$mean)) %>%
     dplyr::ungroup() %>%
     dplyr::distinct(.data$item, .data$diff) %>%
     dplyr::arrange(.data$diff) %>%
     dplyr::pull(.data$item)
 
   plot <- ggplot2::ggplot(plot_data, ggplot2::aes_(x = ~value, y = ~item, fill = ~scale)) +
-    ggridges::geom_density_ridges(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15) +
-    ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(1,6), breaks = c(1,3,5), labels = stringr::str_wrap(c("Less Emphasis", "Neutral", "More Emphasis"), 7)) +
+    ggridges::geom_density_ridges(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15, na.rm = TRUE) +
+    ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(0,6), breaks = c(1,3,5), labels = stringr::str_wrap(c("Less Emphasis", "Neutral", "More Emphasis"), 7)) +
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
@@ -106,7 +123,11 @@ lever_ridgeline <- function(x, aggregate = FALSE, pal = pal_one) {
 
     appender <- function(string) sprintf("%s (%s)", string, counts[string])
 
-    plot +  ggplot2::facet_wrap(~survey, labeller = ggplot2::as_labeller(appender))
+    if (!is.null(lever)){
+      plot + ggplot2::facet_wrap(~survey, labeller = ggplot2::as_labeller(appender))
+    } else {
+      plot
+    }
 
   } else {
 

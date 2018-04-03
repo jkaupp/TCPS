@@ -40,7 +40,7 @@ p + scale_fill_manual("", values = c(grey.colors(2))) +
         panel.grid.major = element_blank())
 
 
-lever_ridgeline(data, pal = pal_one)
+lever_ridgeline(data, lever = "instinit", pal = pal_one)
 
 +
   theme(legend.position = "none",
@@ -65,11 +65,16 @@ walk(names(.levers), ~gen_scales(data, .x))
 
 replace_value <- function(x){
 
+
   if( all(x %% 1 == 0)) {
-    floor(runif(length(x),1,5))
+    case_when(x == 1 ~ 5,
+                 x == 2 ~ 4,
+                 x == 3 ~ 3,
+                 x == 4 ~ 2,
+                 x == 5 ~ 1)
 
   } else {
-    runif(length(x),1,5)
+    jitter(x)
     }
 }
 
@@ -78,7 +83,8 @@ test <- data %>%
   replace(is.na(.), 0)
 
 tcps_sample <- map_at(test, 4:46, replace_value) %>%
-    bind_cols()
+    bind_cols() %>%
+  replace(. < 1, NA)
 
 
 

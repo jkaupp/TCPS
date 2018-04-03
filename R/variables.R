@@ -1,3 +1,5 @@
+#' Levers
+#' @export
 .levers <-
   purrr::set_names(
     c(
