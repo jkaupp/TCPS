@@ -11,7 +11,7 @@ lever_ridgeline(x, lever = NULL, pal = pal_one, aggregate = FALSE)
 
 \item{lever}{short name of the lever of interest}
 
-\item{pal}{a simple two color palette for agreement/importance in the plot.  There are three palette choices available, pal_one, pal_two and pal_three, which can be called as part of this package}
+\item{pal}{a simple two color palette for agreement/importance in the plot.}
 
 \item{aggregate}{TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame}
 }

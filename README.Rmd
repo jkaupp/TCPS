@@ -32,6 +32,9 @@ At this point, the survey data is provided to institutions by contacting the Pro
 However, to show the output for `tidy_tcps` and to illustrate the plotting functions, a  simulated data set was created.
 
 ```{r example}
+
+library(tcps)
+
 data("tcps_sample")
 
 head(tcps_sample)
@@ -49,7 +52,6 @@ The primary visualization for the 6 levers in the survey is a [ridgeline plot](h
  * `aggregate` = boolean TRUE/FALSE.  If TRUE, it aggregates responses across all surveys present in the data (faculty, staff, student). If false it presents as a grid for each survey.
 
 ```{r ridgeline}
-library(tcps)
 lever_ridgeline(tcps_sample)
 ```
 
