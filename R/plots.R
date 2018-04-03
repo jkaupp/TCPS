@@ -42,6 +42,7 @@ likert_scale <- function(x, choice) {
 #' @param choice lever choice
 #'
 #' @return nify plot!
+#' @export
 lever_scale <- function(x, choice) {
 
   cols <- length(unique(x[["survey"]]))
@@ -66,8 +67,6 @@ lever_scale <- function(x, choice) {
 #'
 #' @return a nifty plot!
 #' @export
-#'
-#' @examples
 lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   plot_data <- x %>%
