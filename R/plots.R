@@ -78,7 +78,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
     lvr <- quo_name(lever)
 
-    plot_data <- filter(plot_data, item == lvr) %>%
+    plot_data <- filter(plot_data, .data$item == lvr) %>%
       dplyr::mutate(item = .levers[.data$item],
                     scale = tools::toTitleCase(.data$scale))
 

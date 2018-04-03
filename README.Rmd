@@ -23,7 +23,6 @@ You can install tcps from GitHub with:
 ```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("jkaupp/tcps")
-library(tcps)
 ```
 
 ## Using this package
@@ -50,6 +49,7 @@ The primary visualization for the 6 levers in the survey is a [ridgeline plot](h
  * `aggregate` = boolean TRUE/FALSE.  If TRUE, it aggregates responses across all surveys present in the data (faculty, staff, student). If false it presents as a grid for each survey.
 
 ```{r ridgeline}
+library(tcps)
 lever_ridgeline(tcps_sample)
 ```
 
