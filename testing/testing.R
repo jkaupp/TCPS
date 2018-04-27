@@ -4,7 +4,7 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-files <- list.files("testing", full.names = TRUE, pattern = "sav")
+file <- list.files("testing", full.names = TRUE, pattern = "sav")
 
 data <- files %>%
   map_df(~tidy_tcps(.x))
