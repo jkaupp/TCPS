@@ -41,18 +41,49 @@ tidy_tcps <- function(file){
   data <- haven::read_spss(file) %>%
     dplyr::mutate_if(haven::is.labelled, function(x) haven::as_factor(x, levels = "label")) %>%
     dplyr::mutate(survey = stringi::stri_extract_first_regex(basename(file), "Faculty|Staff|Students")) %>%
-    dplyr::select(.data$survey, .data$PartNum, dplyr::contains("lever",ignore.case = TRUE), dplyr::matches("Q\\d+_Q\\d+")) %>%
+    dplyr::select(.data$survey, .data$PartNum, dplyr::contains("lever",ignore.case = TRUE), dplyr::matches("Q\\d+_Q\\d+_\\d_\\d")) %>%
     purrr::map_df(~replace(.x, is.nan(.x), NA))
 
-  data <- tidyr::gather(data, "item", "value", -survey, -PartNum) %>%
-    dplyr::mutate(item = gsub("Q31_Q36", "Q31_Q37", .data$item),
-                  item = gsub("Q37_Q42", "Q38_Q43", .data$item),
-                  item = gsub("Q26_Q30_1_4", "Q26_Q30_1_3", .data$item),
-                  item = gsub("Q26_Q30_1_5", "Q26_Q30_1_4", .data$item),
-                  item = gsub("Q26_Q30_1_6", "Q26_Q30_1_5", .data$item),
-                  item = gsub("Q26_Q30_2_4", "Q26_Q30_2_3", .data$item),
-                  item = gsub("Q26_Q30_2_5", "Q26_Q30_2_4", .data$item),
-                  item = gsub("Q26_Q30_2_6", "Q26_Q30_2_5", .data$item)) %>%
+  data <- tidyr::gather(data, "item", "value", -survey, -PartNum)
+
+  srvy <- rlang::quo(unique(data[["survey"]]))
+
+  if(unique(data[["survey"]]) == "Faculty") {
+
+    data <- dplyr::mutate(data, item = gsub("Q31_Q36", "Q31_Q37", .data$item),
+                          item = gsub("Q37_Q42", "Q38_Q43", .data$item),
+                          item = gsub("Q26_Q30_1_4", "Q26_Q30_1_3", .data$item),
+                          item = gsub("Q26_Q30_1_5", "Q26_Q30_1_4", .data$item),
+                          item = gsub("Q26_Q30_1_6", "Q26_Q30_1_5", .data$item),
+                          item = gsub("Q26_Q30_2_4", "Q26_Q30_2_3", .data$item),
+                          item = gsub("Q26_Q30_2_5", "Q26_Q30_2_4", .data$item),
+                          item = gsub("Q26_Q30_2_6", "Q26_Q30_2_5", .data$item))
+  }
+
+  if(unique(data[["survey"]]) == "Staff") {
+
+    data <- dplyr::mutate(data, item = gsub("Q12_Q15_1_2", "Q12_Q15_1_1", .data$item),
+                          item = gsub("Q12_Q15_1_3", "Q12_Q15_1_2", .data$item),
+                          item = gsub("Q12_Q15_1_4", "Q12_Q15_1_3", .data$item),
+                          item = gsub("Q12_Q15_1_5", "Q12_Q15_1_4", .data$item),
+                          item = gsub("Q12_Q15_2_2", "Q12_Q15_2_1", .data$item),
+                          item = gsub("Q12_Q15_2_3", "Q12_Q15_2_2", .data$item),
+                          item = gsub("Q12_Q15_2_4", "Q12_Q15_2_3", .data$item),
+                          item = gsub("Q12_Q15_2_5", "Q12_Q15_2_4", .data$item),
+                          item = gsub("Q16_Q21_1_3", "Q16_Q21_1_2", .data$item),
+                          item = gsub("Q16_Q21_1_4", "Q16_Q21_1_3", .data$item),
+                          item = gsub("Q16_Q21_1_5", "Q16_Q21_1_4", .data$item),
+                          item = gsub("Q16_Q21_1_6", "Q16_Q21_1_5", .data$item),
+                          item = gsub("Q16_Q21_1_7", "Q16_Q21_1_6", .data$item),
+                          item = gsub("Q16_Q21_2_3", "Q16_Q21_2_2", .data$item),
+                          item = gsub("Q16_Q21_2_4", "Q16_Q21_2_3", .data$item),
+                          item = gsub("Q16_Q21_2_5", "Q16_Q21_2_4", .data$item),
+                          item = gsub("Q16_Q21_2_6", "Q16_Q21_2_5", .data$item),
+                          item = gsub("Q16_Q21_2_7", "Q16_Q21_2_6", .data$item))
+  }
+
+
+   data <- data %>%
     tidyr::separate(item, c("qstart", "qend", "scale", "idx"), sep = "\\_", remove = FALSE, fill = "right") %>%
     dplyr::mutate(idx = ifelse(is.na(.data$idx) & !grepl("Lever", .data$item), stringi::stri_extract_last_regex(.data$item, "\\d") ,idx)) %>%
     dplyr::mutate(scale = ifelse(.data$scale == 1, "agreement", "importance"),
@@ -67,11 +98,12 @@ tidy_tcps <- function(file){
     dplyr::select(.data$survey, .data$part_num, .data$scale, .data$item, .data$value) %>%
     tidyr::spread("item", "value", drop = TRUE)
 
-  srvy <- rlang::quo(unique(data[["survey"]]))
 
   selection <- dplyr::filter(.tcps_levers, .data$survey == UQ(srvy))
 
   selection$data <- list(data)
+
+
 
   # Need to update this to be V2 specific
   purrr::pmap_df(selection, scale_helper) %>%
@@ -80,7 +112,7 @@ tidy_tcps <- function(file){
     split(.$type) %>%
     purrr::map(~dplyr::select(.x, -.data$type) %>% tidyr::spread( item, value)) %>%
     purrr::reduce(dplyr::left_join, by = c("survey", "part_num", "scale")) %>%
-    dplyr::select(.data$survey, .data$part_num, .data$scale, .data$assessteach, .data$brengage, .data$impteach, .data$infrastruct, .data$instinit, .data$teachrec, dplyr::starts_with("Q"))
+    dplyr::select(.data$survey, .data$part_num, .data$scale, .data$assessteach, .data$brengage, .data$impteach, .data$infrastruct, .data$instinit, .data$teachrec, dplyr::num_range("Q",1:50))
 
 }
 

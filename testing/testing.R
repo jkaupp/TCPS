@@ -6,13 +6,10 @@ library(tidyr)
 
 file <- list.files("testing", full.names = TRUE, pattern = "sav")
 
-data <- files %>%
+tidy_tcps(file[[2]])
+
+data <- file %>%
   map_df(~tidy_tcps(.x))
-
-
-data %>%
-  split(.$type) %>%
-  map_dfr(~spread(.x, item, value))
 
 data %>%
   distinct(PartNum, item, type, scale, .keep_all = TRUE) %>%
