@@ -20,7 +20,7 @@
     )
   )
 
-.faculty_levers <-
+.tcps_levers <-
   tibble::tibble(
     survey = rep(c("Faculty", "Staff", "Students"), each = 6),
     lever = rep(
@@ -39,8 +39,8 @@
       sprintf("Q%s", 13:18),
       sprintf("Q%s", 19:25),
       sprintf("Q%s", 26:30),
-      sprintf("Q%s", 31:36),
-      sprintf("Q%s", 37:42),
+      sprintf("Q%s", 31:37),
+      sprintf("Q%s", 38:43),
       sprintf("Q%s", 6:11),
       sprintf("Q%s", 12:15),
       sprintf("Q%s", 16:21),

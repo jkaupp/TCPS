@@ -7,9 +7,10 @@
 #'
 #' @return tidied tibble for each choice
 scale_helper <- function(data, survey, lever, questions) {
+
   dplyr::select(data,
     dplyr::matches("survey"),
-    .data$PartNum,
+    .data$part_num,
     dplyr::contains(lever),
     dplyr::one_of(purrr::map_chr(unlist(questions), ~ sprintf("%sa", .x))),
     dplyr::one_of(purrr::map_chr(unlist(questions), ~ sprintf("%si", .x)))) %>%

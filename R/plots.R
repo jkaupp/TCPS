@@ -8,7 +8,7 @@ likert_scale <- function(x, choice) {
 
   type <- quo(unique(x[["survey"]]))
 
-  questions <- dplyr::filter(.faculty_levers, .data$lever == choice, .data$survey == UQ(type)) %>%
+  questions <- dplyr::filter(.tcps_levers, .data$lever == choice, .data$survey == UQ(type)) %>%
     tidyr::unnest(questions) %>%
     dplyr::pull(.data$questions)
 
