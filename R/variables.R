@@ -43,7 +43,7 @@
 
 .tcps_levers <-
   tibble::tibble(
-    survey = rep(c("Faculty", "Staff", "Students"), each = 6),
+    survey = rep(c("Faculty", "Staff", "Student"), each = 6),
     lever = rep(
       c(
         "instinit",

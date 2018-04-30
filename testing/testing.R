@@ -4,12 +4,12 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-file <- list.files("testing", full.names = TRUE, pattern = "sav")
+file <- list.files("testing", full.names = TRUE, pattern = "sav")[[2]]
 
-tidy_tcps(file[[2]])
+tidy_tcps(file) -> data2
 
 data <- file %>%
-  map_df(~tidy_tcps(.x))
+  map_dfr(~tidy_tcps(.x))
 
 data %>%
   distinct(PartNum, item, type, scale, .keep_all = TRUE) %>%

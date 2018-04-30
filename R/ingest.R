@@ -40,11 +40,14 @@ tidy_tcps <- function(file){
 
   data <- haven::read_spss(file) %>%
     dplyr::mutate_if(haven::is.labelled, function(x) haven::as_factor(x, levels = "label")) %>%
-    dplyr::mutate(survey = stringi::stri_extract_first_regex(basename(file), "Faculty|Staff|Students")) %>%
+    dplyr::mutate_if(is.factor, as.character) %>%
+    dplyr::mutate(survey = stringi::stri_extract_first_regex(basename(file), "Faculty|Staff|Student")) %>%
     dplyr::select(.data$survey, .data$PartNum, dplyr::contains("lever",ignore.case = TRUE), dplyr::matches("Q\\d+_Q\\d+_\\d_\\d")) %>%
     purrr::map_df(~replace(.x, is.nan(.x), NA))
 
   data <- tidyr::gather(data, "item", "value", -survey, -PartNum)
+
+
 
   srvy <- rlang::quo(unique(data[["survey"]]))
 
@@ -79,7 +82,28 @@ tidy_tcps <- function(file){
                           item = gsub("Q16_Q21_2_4", "Q16_Q21_2_3", .data$item),
                           item = gsub("Q16_Q21_2_5", "Q16_Q21_2_4", .data$item),
                           item = gsub("Q16_Q21_2_6", "Q16_Q21_2_5", .data$item),
-                          item = gsub("Q16_Q21_2_7", "Q16_Q21_2_6", .data$item))
+                          item = gsub("Q16_Q21_2_7", "Q16_Q21_2_6", .data$item),
+                          item = gsub("Q34_Q38_1_6", "Q34_Q38_1_5", .data$item),
+                          item = gsub("Q34_Q38_2_6", "Q34_Q38_2_5", .data$item))
+  }
+
+
+
+  if(unique(data[["survey"]]) == "Student") {
+
+    data <- dplyr::mutate(data, item = gsub("Q18_Q23_1_6", "Q18_Q23_1_5", .data$item),
+                          item = gsub("Q18_Q23_1_7", "Q18_Q23_1_6", .data$item),
+                          item = gsub("Q18_Q23_2_6", "Q18_Q23_2_5", .data$item),
+                          item = gsub("Q18_Q23_2_7", "Q18_Q23_2_6", .data$item),
+                          item = gsub("Q24_Q28_1_5", "Q24_Q28_1_3", .data$item),
+                          item = gsub("Q24_Q28_1_6", "Q24_Q28_1_4", .data$item),
+                          item = gsub("Q24_Q28_1_7", "Q24_Q28_1_5", .data$item),
+                          item = gsub("Q24_Q28_2_5", "Q24_Q28_2_3", .data$item),
+                          item = gsub("Q24_Q28_2_6", "Q24_Q28_2_4", .data$item),
+                          item = gsub("Q24_Q28_2_7", "Q24_Q28_2_5", .data$item),
+                          item = gsub("Q29_Q34_1_7", "Q29_Q34_1_6", .data$item),
+                          item = gsub("Q29_Q34_2_7", "Q29_Q34_2_6", .data$item)
+    )
   }
 
 
