@@ -20,6 +20,27 @@
     )
   )
 
+.lever_alias <-
+  purrr::set_names(
+    c(
+      "instinit",
+      "assessteach",
+      "impteach",
+      "infrastruct",
+      "brengage",
+      "teachrec"
+    ),
+    c(
+      "Lever1",
+      "Lever2",
+      "Lever3",
+      "Lever4",
+      "Lever5",
+      "Lever6"
+    )
+
+  )
+
 .tcps_levers <-
   tibble::tibble(
     survey = rep(c("Faculty", "Staff", "Students"), each = 6),

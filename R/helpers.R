@@ -11,15 +11,11 @@ scale_helper <- function(data, survey, lever, questions) {
   dplyr::select(data,
     dplyr::matches("survey"),
     .data$part_num,
+    .data$scale,
     dplyr::contains(lever),
-    dplyr::one_of(purrr::map_chr(unlist(questions), ~ sprintf("%sa", .x))),
-    dplyr::one_of(purrr::map_chr(unlist(questions), ~ sprintf("%si", .x)))) %>%
+    dplyr::one_of(questions)) %>%
     dplyr::mutate_if(is.factor, as.numeric) %>%
-    tidyr::gather("item", "value", names(.)[!grepl("PartNum|survey", names(.))]) %>%
-    dplyr::mutate(scale = ifelse(grepl("agree|a\\b", .data$item), "agreement", "importance")) %>%
-    dplyr::mutate(item = stringi::stri_replace_first_regex(.data$item, "\\bagree|\\bimp", ""),
-      item = stringi::stri_replace_first_regex(.data$item, "a\\b|i\\b", "")
-    ) %>%
+    tidyr::gather("item", "value", names(.)[!(names(.) %in% c("part_num", "survey", "scale"))]) %>%
     dplyr::mutate(type = ifelse(grepl("Q", .data$item), "question", "lever"))
 
 }

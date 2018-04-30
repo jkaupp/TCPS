@@ -62,6 +62,8 @@ tidy_tcps <- function(file){
     dplyr::mutate(qstart = readr::parse_number(.data$qstart)) %>%
     dplyr::mutate(item = ifelse(grepl("Lever", .data$item), .data$item, glue::glue("Q{.data$qstart + (as.numeric(idx) -1)}"))) %>%
     dplyr::rename(part_num = .data$PartNum) %>%
+    dplyr::mutate(item = gsub("[Ai]\\b", "", .data$item),
+                  item = ifelse(grepl("Lever", .data$item), .lever_alias[item], .data$item)) %>%
     dplyr::select(.data$survey, .data$part_num, .data$scale, .data$item, .data$value) %>%
     tidyr::spread("item", "value", drop = TRUE)
 
@@ -71,17 +73,14 @@ tidy_tcps <- function(file){
 
   selection$data <- list(data)
 
-  # need to rename levers
-
   # Need to update this to be V2 specific
   purrr::pmap_df(selection, scale_helper) %>%
-    dplyr::rename(part_num = .data$PartNum) %>%
     dplyr::distinct(.data$part_num, .data$item, .data$type, .data$scale, .keep_all = TRUE) %>%
     dplyr::ungroup() %>%
     split(.$type) %>%
     purrr::map(~dplyr::select(.x, -.data$type) %>% tidyr::spread( item, value)) %>%
     purrr::reduce(dplyr::left_join, by = c("survey", "part_num", "scale")) %>%
-    dplyr::select(.data$survey, .data$part_num, .data$scale, .data$assessteach, .data$brengage, .data$impteach, .data$infrastruct, .data$instinit, .data$teachrec, dplyr::pull(.questions,.data$question))
+    dplyr::select(.data$survey, .data$part_num, .data$scale, .data$assessteach, .data$brengage, .data$impteach, .data$infrastruct, .data$instinit, .data$teachrec, dplyr::starts_with("Q"))
 
 }
 
