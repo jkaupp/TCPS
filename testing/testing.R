@@ -25,9 +25,11 @@ data %>%
   tally()
 
 
+tc
 
-filter(data, survey == "Faculty", item == "Q7") %>%
-  lever_scale("instinit")
+
+tcps_sample %>%
+  lever_ridgeline("instinit")
 
 p + scale_fill_manual("", values = c(grey.colors(2))) +
   scale_y_discrete(expand = c(0,0)) +
@@ -58,30 +60,6 @@ gen_scales <- function(data, scale) {
 }
 
 
-walk(names(.levers), ~gen_scales(data, .x))
-
-replace_value <- function(x){
-
-
-  if( all(x %% 1 == 0)) {
-    case_when(x == 1 ~ 5,
-                 x == 2 ~ 4,
-                 x == 3 ~ 3,
-                 x == 4 ~ 2,
-                 x == 5 ~ 1)
-
-  } else {
-    jitter(x)
-    }
-}
-
-
-test <- data %>%
-  replace(is.na(.), 0)
-
-tcps_sample <- map_at(test, 4:46, replace_value) %>%
-    bind_cols() %>%
-  replace(. < 1, NA)
 
 
 

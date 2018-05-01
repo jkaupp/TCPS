@@ -77,7 +77,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   if (!is.null(lever)) {
 
-    lvr <- quo_name(lever)
+    lvr <- rlang::quo_name(lever)
 
     plot_data <- dplyr::filter(plot_data, .data$item == lvr) %>%
       dplyr::mutate(item = .levers[.data$item],

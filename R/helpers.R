@@ -27,6 +27,8 @@ scale_helper <- function(data, survey, lever, questions) {
 #' @return a tidy data frame of likert data for a scale
 scale_likert <- function(x) {
 
+  srvy <- rlang::quo(unique(x[["survey"]]))
+
   plot_data <- x %>%
     dplyr::mutate_at(dplyr::vars(dplyr::matches("\\d+")), function(x)
       factor(
@@ -42,7 +44,7 @@ scale_likert <- function(x) {
       )) %>%
     dplyr::select(dplyr::matches("scale|\\d+"))
 
-  item_names <- dplyr::filter(.questions, .data$question %in% names(plot_data)) %>%
+  item_names <- dplyr::filter(.questions, .data$question %in% names(plot_data), survey == UQ(srvy)) %>%
     dplyr::pull(.data$prompt) %>%
     tools::toTitleCase()
 
