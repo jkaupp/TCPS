@@ -44,7 +44,7 @@ scale_likert <- function(x) {
       )) %>%
     dplyr::select(dplyr::matches("scale|\\d+"))
 
-  item_names <- dplyr::filter(.questions, .data$question %in% names(plot_data), survey == UQ(srvy)) %>%
+  item_names <- dplyr::filter(.questions, .data$question %in% names(plot_data), survey == rlang::UQ(srvy)) %>%
     dplyr::pull(.data$prompt) %>%
     tools::toTitleCase()
 

@@ -73,7 +73,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   plot_data <- x %>%
     dplyr::select(-dplyr::contains("Q")) %>%
-    tidyr::gather("item", "value", .data$assessteach:.data$teachrec)
+    tidyr::gather("item", "value", .data$assessteach:.data$teachrec, convert = FALSE)
 
   if (!is.null(lever)) {
 

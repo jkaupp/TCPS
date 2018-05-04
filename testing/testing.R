@@ -4,9 +4,9 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-file <- list.files("testing", full.names = TRUE, pattern = "sav")[[2]]
+file <- list.files("testing", full.names = TRUE, pattern = "sav")[[3]]
 
-tidy_tcps(file) -> data2
+tidy_tcps(file) -> data
 
 data <- file %>%
   map_dfr(~tidy_tcps(.x))
@@ -25,27 +25,10 @@ data %>%
   tally()
 
 
-tc
+
+tcps_sample %>%  lever_ridgeline("instinit")
 
 
-tcps_sample %>%
-  lever_ridgeline("instinit")
-
-p + scale_fill_manual("", values = c(grey.colors(2))) +
-  scale_y_discrete(expand = c(0,0)) +
-  theme(strip.text = element_blank(),
-        axis.text.y = element_blank(),
-        legend.position = "none",
-        panel.grid.major = element_blank())
-
-
-lever_ridgeline(data, lever = "instinit", pal = pal_one)
-
-+
-  theme(legend.position = "none",
-        axis.text.y = element_text(vjust = 0),
-        panel.grid.major.x = element_line(linetype = "dashed"),
-        panel.grid.major.y = element_blank())
 
 
 ggplot2::ggsave(filename = "total population ridgeline.png", width = 8, height = 5, units = "in", dpi = 300)

@@ -39,13 +39,13 @@ tidy_tcps_old <- function(file){
 tidy_tcps <- function(file){
 
   data <- haven::read_spss(file) %>%
-    dplyr::mutate_if(haven::is.labelled, function(x) haven::as_factor(x, levels = "label")) %>%
+    dplyr::mutate_if(haven::is.labelled, function(x) haven::as_factor(x, levels = "values")) %>%
     dplyr::mutate_if(is.factor, as.character) %>%
     dplyr::mutate(survey = stringi::stri_extract_first_regex(basename(file), "Faculty|Staff|Student")) %>%
     dplyr::select(.data$survey, .data$PartNum, dplyr::contains("lever",ignore.case = TRUE), dplyr::matches("Q\\d+_Q\\d+_\\d_\\d")) %>%
     purrr::map_df(~replace(.x, is.nan(.x), NA))
 
-  data <- tidyr::gather(data, "item", "value", -survey, -PartNum)
+  data <- tidyr::gather(data, "item", "value", -survey, -PartNum, convert = FALSE)
 
 
 
@@ -120,7 +120,7 @@ tidy_tcps <- function(file){
     dplyr::mutate(item = gsub("[Ai]\\b", "", .data$item),
                   item = ifelse(grepl("Lever", .data$item), .lever_alias[item], .data$item)) %>%
     dplyr::select(.data$survey, .data$part_num, .data$scale, .data$item, .data$value) %>%
-    tidyr::spread("item", "value", drop = TRUE)
+    tidyr::spread("item", "value", drop = TRUE, convert = TRUE)
 
 
   selection <- dplyr::filter(.tcps_levers, .data$survey == UQ(srvy))

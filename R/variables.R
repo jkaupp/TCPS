@@ -78,7 +78,7 @@
   )
 
 .questions <- tibble::tibble(
-  survey = c(rep("Faculty", 43-7+1),rep("Staff",38-6+1),rep("Students",38-8+1)),
+  survey = c(rep("Faculty", 43-7+1),rep("Staff",38-6+1),rep("Student",38-8+1)),
   question = c(sprintf("Q%s", 7:43),sprintf("Q%s", 6:38), sprintf("Q%s",8:38)),
   prompt = c(
     c(
