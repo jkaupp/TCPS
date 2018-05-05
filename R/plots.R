@@ -139,7 +139,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
       dplyr::summarize(n = sum(.data$n)) %>%
       purrr::flatten_chr()
 
-    plot + ggplot2::labs(subtitle = sprintf("Queen's (%s)",counts))
+    plot + ggplot2::labs(subtitle = sprintf("%s responses",counts))
   }
 
 }
