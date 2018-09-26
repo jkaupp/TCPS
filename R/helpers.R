@@ -60,3 +60,18 @@ scale_likert <- function(x) {
 }
 
 
+extract_legend <- function(x) {
+  tmp <- ggplot2::ggplot_gtable(ggplot2::ggplot_build(x))
+  leg <- which(sapply(tmp$grobs, function(x)
+    x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)
+}
+
+remove_legend <- function(x) {
+
+  x <- x + ggplot2::theme(legend.position = "none")
+
+  return(x)
+
+}

@@ -25,11 +25,12 @@ likert_scale <- function(x, choice) {
 
   graphics::plot(scale_bar, colors = viridisLite::viridis(5), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
     theme_tcps(grid = FALSE) +
-    ggplot2::labs(title = title,
+    ggplot2::labs(subtitle = title,
                   y = NULL,
                   x = NULL) +
     ggplot2::theme(strip.text.x = ggplot2::element_text(hjust = 0.5, size = 14),
                    #axis.text.x = ggplot2::element_blank(),
+                   plot.subtitle = element_text(hjust = 0),
                    axis.text.y = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 18),
                    legend.position = "bottom")
@@ -48,12 +49,18 @@ lever_scale <- function(x, choice) {
 
   cols <- length(unique(x[["survey"]]))
 
+  lever <- gsub("lever(\\d)", "Lever \\1", choice)
+
   if (cols > 1) {
 
     plots <- split(x, x[["survey"]]) %>%
       purrr::map(~likert_scale(.x, choice))
 
-    gridExtra::grid.arrange(grobs = plots, ncol = cols)
+    legend <- extract_legend(plots[[1]])
+
+    plots <- map(plots, remove_legend)
+
+      gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("TCPS %s plots for University of Winsdor", lever), x = 0.19, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2,heights = c(10, 1))
   } else {
     likert_scale(x, choice)
   }
@@ -105,7 +112,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
-    ggplot2::labs(x = NULL, y = NULL, title = NULL) +
+    ggplot2::labs(x = NULL, y = NULL, title = "TCPS Lever ridgeline plots for University of Windsor", subtitle = "Yellow fill represents the agreement scale, blue fill represents the importance scale.") +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
 
@@ -119,7 +126,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
     appender <- function(string) sprintf("%s (%s)", string, counts[string])
 
-    if (!is.null(lever)){
+    if (!is.null(lever) | !aggregate){
       plot + ggplot2::facet_wrap(~survey, labeller = ggplot2::as_labeller(appender))
     } else {
       plot
