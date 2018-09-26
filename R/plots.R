@@ -49,8 +49,6 @@ lever_scale <- function(x, choice) {
 
   cols <- length(unique(x[["survey"]]))
 
-  lever <- gsub("lever(\\d)", "Lever \\1", choice)
-
   if (cols > 1) {
 
     plots <- split(x, x[["survey"]]) %>%
@@ -58,9 +56,11 @@ lever_scale <- function(x, choice) {
 
     legend <- extract_legend(plots[[1]])
 
+    lheight <- sum(legend$height)
+
     plots <- map(plots, remove_legend)
 
-      gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("TCPS %s plots for University of Winsdor", lever), x = 0.19, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2,heights = c(10, 1))
+    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("University of Windsor TCPS likert plots for %s", .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2, heights = grid::unit.c(unit(1, "npc") - lheight, lheight))
   } else {
     likert_scale(x, choice)
   }
@@ -112,7 +112,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
-    ggplot2::labs(x = NULL, y = NULL, title = "TCPS Lever ridgeline plots for University of Windsor", subtitle = "Yellow fill represents the agreement scale, blue fill represents the importance scale.") +
+    ggplot2::labs(x = NULL, y = NULL, title = "University of Windsor TCPS lever ridgeline plots", subtitle = "Yellow fill represents the agreement scale, blue fill represents the importance scale.") +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
 
@@ -141,7 +141,9 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
       dplyr::summarize(n = sum(.data$n)) %>%
       purrr::flatten_chr()
 
-    plot + ggplot2::labs(subtitle = sprintf("%s responses",counts))
+    plot + ggplot2::labs(title = "University of Windsor TCPS lever ridgeline plot",
+                         subtitle =sprintf("%s responses. Yellow fill represents the agreement scale, blue fill represents the importance scale.", counts))
+
   }
 
 }

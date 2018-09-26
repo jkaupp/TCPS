@@ -75,3 +75,48 @@ remove_legend <- function(x) {
   return(x)
 
 }
+
+
+grid_arrange_shared_legend <-
+  function(...,
+           ncol = length(list(...)),
+           nrow = 1,
+           position = c("bottom", "right"),
+           top) {
+    plots <- list(...)
+
+    position <- match.arg(position)
+    top <- match.arg(top)
+    g <-
+      ggplot2::ggplotGrob(plots[[1]] + ggplot2::theme(legend.position = position))$grobs
+    legend <- g[[which(sapply(g, function(x)
+      x$name) == "guide-box")]]
+    lheight <- sum(legend$height)
+    lwidth <- sum(legend$width)
+    gl <- lapply(plots, function(x)
+      x + theme(legend.position = "none"))
+    gl <- c(gl, ncol = ncol, nrow = nrow)
+
+    combined <- switch(
+      position,
+      "bottom" = gridExtra::arrangeGrob(
+        do.call(gridExtra::arrangeGrob, gl),
+        legend,
+        ncol = 1,
+        heights = grid::unit.c(unit(1, "npc") - lheight, lheight)
+      ),
+      "right" = gridExtra::arrangeGrob(
+        do.call(gridExtra::arrangeGrob, gl),
+        legend,
+        ncol = 2,
+        widths = unit.c(unit(1, "npc") - lwidth, lwidth)
+      )
+    )
+
+    grid::grid.newpage()
+    grid::grid.draw(combined)
+
+    # return gtable invisibly
+    invisible(combined)
+
+  }
