@@ -8,9 +8,9 @@ likert_scale <- function(x, choice) {
 
   type <- quo(unique(x[["survey"]]))
 
-  questions <- dplyr::filter(.tcps_levers, .data$lever == choice, .data$survey == UQ(type)) %>%
-    tidyr::unnest(questions) %>%
-    dplyr::pull(.data$questions)
+  questions <- dplyr::filter(.tcps, .data$lever == choice, .data$survey == UQ(type)) %>%
+    tidyr::unite("question", lever, question, sep = "_") %>%
+    dplyr::pull(.data$question)
 
   scales <- dplyr::select(x, .data$survey, .data$part_num, .data$scale, questions)
 
@@ -32,7 +32,7 @@ likert_scale <- function(x, choice) {
                    #axis.text.x = ggplot2::element_blank(),
                    axis.text.y = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 18),
-                   legend.position = "none")
+                   legend.position = "bottom")
 
 }
 
@@ -72,8 +72,8 @@ lever_scale <- function(x, choice) {
 lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   plot_data <- x %>%
-    dplyr::select(-dplyr::contains("Q")) %>%
-    tidyr::gather("item", "value", .data$assessteach:.data$teachrec, convert = FALSE)
+    dplyr::select(-dplyr::contains("q")) %>%
+    tidyr::gather("item", "value", dplyr::contains("lever"), convert = FALSE)
 
   if (!is.null(lever)) {
 
@@ -89,10 +89,6 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
                     scale = tools::toTitleCase(.data$scale))
 
   }
-
-
-
-
 
   order <- plot_data %>%
     dplyr::group_by(.data$item, .data$scale) %>%
@@ -116,7 +112,6 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
   if (!aggregate) {
 
     counts <- plot_data %>%
-      #dplyr::filter_(~!is.na(value)) %>%
       dplyr::group_by(.data$survey) %>%
       dplyr::summarize(n = dplyr::n_distinct(.data$part_num))
 

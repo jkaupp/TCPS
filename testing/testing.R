@@ -3,32 +3,17 @@ library(purrr)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
+library(here)
 
-file <- list.files("testing", full.names = TRUE, pattern = "sav")[[3]]
+dir <- dir("/Users/jake/Google Drive/Consulting/TCPS/Windsor", pattern = "sav", full.names = TRUE)
 
-tidy_tcps(file) -> data
-
-data <- file %>%
-  map_dfr(~tidy_tcps(.x))
-
-data %>%
-  distinct(PartNum, item, type, scale, .keep_all = TRUE) %>%
-  View()
-
-  filter(type == "lever") %>%
-  spread(item, value)
-
-data %>%
-  dplyr::filter_(~type == "lever") %>%
-  distinct(survey, PartNum) %>%
-  group_by(survey) %>%
-  tally()
+file <- dir[[1]]
 
 
+tidy_tcps_windsor(file) -> data
 
-tcps_sample %>%  lever_ridgeline("instinit")
 
-
+data %>%  lever_ridgeline("lever2")
 
 
 ggplot2::ggsave(filename = "total population ridgeline.png", width = 8, height = 5, units = "in", dpi = 300)

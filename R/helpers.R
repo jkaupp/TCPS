@@ -42,9 +42,10 @@ scale_likert <- function(x) {
           "A Great Deal"
         )
       )) %>%
-    dplyr::select(dplyr::matches("scale|\\d+"))
+    dplyr::select(dplyr::matches("scale|lever\\d_q\\d"))
 
-  item_names <- dplyr::filter(.questions, .data$question %in% names(plot_data), survey == rlang::UQ(srvy)) %>%
+  item_names <- tidyr::unite(.tcps, "question", lever, question, sep = "_") %>%
+    dplyr::filter(.data$question %in% names(plot_data), survey == rlang::UQ(srvy)) %>%
     dplyr::pull(.data$prompt) %>%
     tools::toTitleCase()
 

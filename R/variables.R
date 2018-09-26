@@ -3,83 +3,52 @@
 .levers <-
   purrr::set_names(
     c(
-      "Institutional Initiatives",
-      "Assessment of Teaching",
-      "Implementing Effective Teaching",
-      "Infrastructure Supporting Teaching",
-      "Broad Engagement Around Teaching",
-      "Recognizing Effective Teaching"
+      "Lever 1: Institutional Initiatives",
+      "Lever 2: Assessment of Teaching",
+      "Lever 3: Implementing Effective Teaching",
+      "Lever 4: Infrastructure Supporting Teaching",
+      "Lever 5: Broad Engagement Around Teaching",
+      "Lever 6: Recognizing Effective Teaching"
     ),
     c(
-      "instinit",
-      "assessteach",
-      "impteach",
-      "infrastruct",
-      "brengage",
-      "teachrec"
+      "lever1",
+      "lever2",
+      "lever3",
+      "lever4",
+      "lever5",
+      "lever6"
     )
   )
 
-.lever_alias <-
-  purrr::set_names(
-    c(
-      "instinit",
-      "assessteach",
-      "impteach",
-      "infrastruct",
-      "brengage",
-      "teachrec"
-    ),
-    c(
-      "Lever1",
-      "Lever2",
-      "Lever3",
-      "Lever4",
-      "Lever5",
-      "Lever6"
-    )
 
-  )
-
-.tcps_levers <-
-  tibble::tibble(
-    survey = rep(c("Faculty", "Staff", "Student"), each = 6),
-    lever = rep(
-      c(
-        "instinit",
-        "assessteach",
-        "impteach",
-        "infrastruct",
-        "brengage",
-        "teachrec"
-      ),
-      3
-    ),
-    questions = list(
-      sprintf("Q%s", 7:12),
-      sprintf("Q%s", 13:18),
-      sprintf("Q%s", 19:25),
-      sprintf("Q%s", 26:30),
-      sprintf("Q%s", 31:37),
-      sprintf("Q%s", 38:43),
-      sprintf("Q%s", 6:11),
-      sprintf("Q%s", 12:15),
-      sprintf("Q%s", 16:21),
-      sprintf("Q%s", 22:27),
-      sprintf("Q%s", 28:33),
-      sprintf("Q%s", 34:38),
-      sprintf("Q%s", 8:12),
-      sprintf("Q%s", 13:17),
-      sprintf("Q%s", 18:23),
-      sprintf("Q%s", 24:28),
-      sprintf("Q%s", 29:34),
-      sprintf("Q%s", 35:38)
-    )
-  )
-
-.questions <- tibble::tibble(
-  survey = c(rep("Faculty", 43-7+1),rep("Staff",38-6+1),rep("Student",38-8+1)),
-  question = c(sprintf("Q%s", 7:43),sprintf("Q%s", 6:38), sprintf("Q%s",8:38)),
+.tcps <- tibble::tibble(
+  survey = c(rep("Faculty", 6+6+7+5+7+6),rep("Staff",6+4+6+6+6+5),rep("Student",5+5+6+5+6+4)),
+  lever =  c(purrr::flatten_chr(purrr::map2(sprintf("lever%s", 1:6), c(6,6,7,5,7,6), ~rep(.x, each = .y))),
+             purrr::flatten_chr(purrr::map2(sprintf("lever%s", 1:6), c(6,4,6,6,6,5), ~rep(.x, each = .y))),
+             purrr::flatten_chr(purrr::map2(sprintf("lever%s", 1:6), c(5,5,6,5,6,4), ~rep(.x, each = .y)))),
+  title = c(purrr::flatten_chr(purrr::map2(c("instinit", "assessteach", "impteach", "infrastruct", "brengage", "teachrec"), c(6,6,7,5,7,6), ~rep(.x, each = .y))),
+            purrr::flatten_chr(purrr::map2(c("instinit", "assessteach", "impteach", "infrastruct", "brengage", "teachrec"), c(6,4,6,6,6,5), ~rep(.x, each = .y))),
+            purrr::flatten_chr(purrr::map2(c("instinit", "assessteach", "impteach", "infrastruct", "brengage", "teachrec"), c(5,5,6,5,6,4), ~rep(.x, each = .y)))),
+  question = c(
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:7),
+    sprintf("q%s", 1:5),
+    sprintf("q%s", 1:7),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:4),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:5),
+    sprintf("q%s", 1:5),
+    sprintf("q%s", 1:5),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:5),
+    sprintf("q%s", 1:6),
+    sprintf("q%s", 1:4)
+  ),
   prompt = c(
     c(
       "teaching is considered a priority in the primary institutional strategic plan",
@@ -125,7 +94,7 @@
         "senior administrators convey that effective teaching is an institutional priority",
         "institution-wide initiatives promote innovative teaching practices",
         "most instructors consider good teaching to be a priority",
-        "staff who support teaching are regarded as an 1 2 3 4 5 DK PNA important resource for instructors and
+        "staff who support teaching are regarded as an important resource for instructors and
 educational administrators",
         "student evaluations of teaching are taken into consideration in hiring, promotion and tenure practices",
         "teaching is formally assessed in multiple ways",
