@@ -162,12 +162,14 @@ teaching",
 
 #' Ridgeline palette one
 #' @export
-pal_one <- c("#F6D600","#11CD86")
+pal_one <- c("#0051b3", "#a70076")
 
 #' Ridgeline palette two
 #' @export
-pal_two <- c("#ffdf50","#00a7f5")
+pal_two <- c("#98ce49",
+             "#00298d")
 
 #' Ridgeline palette three
 #' @export
-pal_three <- c("#091971","#80eb84")
+pal_three <- c("#026ec0",
+               "#dd3a48")

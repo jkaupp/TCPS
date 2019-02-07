@@ -23,17 +23,19 @@ likert_scale <- function(x, choice) {
   ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
   ggplot2::update_geom_defaults("text", list(family = "Lato"))
 
-  graphics::plot(scale_bar, colors = viridisLite::viridis(5), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
+ graphics::plot(scale_bar, colors = viridisLite::viridis(5, option = "cividis"), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
     theme_tcps(grid = FALSE) +
     ggplot2::labs(subtitle = title,
-                  y = NULL,
-                  x = NULL) +
+                  x = NULL,
+                  y = "Percent") +
     ggplot2::theme(strip.text.x = ggplot2::element_text(hjust = 0.5, size = 14),
                    #axis.text.x = ggplot2::element_blank(),
                    plot.subtitle = element_text(hjust = 0),
                    axis.text.y = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 18),
-                   legend.position = "bottom")
+                   legend.position = "bottom",
+                   plot.background = element_rect(color = "black", size = 0.05))
+
 
 }
 
@@ -97,6 +99,10 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   }
 
+  means <- plot_data %>%
+    group_by(item) %>%
+    summarize(mean = mean(value, na.rm = TRUE))
+
   order <- plot_data %>%
     dplyr::group_by(.data$item, .data$scale) %>%
     dplyr::summarize(mean = mean(.data$value, na.rm = TRUE)) %>%
@@ -106,8 +112,8 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
     dplyr::arrange(.data$diff) %>%
     dplyr::pull(.data$item)
 
-  plot <- ggplot2::ggplot(plot_data, ggplot2::aes_(x = ~value, y = ~item, fill = ~scale)) +
-    ggridges::geom_density_ridges(alpha = 0.8, color = "grey30", rel_min_height = 0.01, size = 0.15, na.rm = TRUE) +
+  plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .data$value, y = .data$item, fill = .data$scale)) +
+    ggridges::stat_density_ridges(quantile_lines = TRUE, quantiles = 2, alpha = 0.8, color = "white", rel_min_height = 0.01, size = 0.2, na.rm = TRUE) +
     ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(0,6), breaks = c(1,3,5), labels = stringr::str_wrap(c("Less Emphasis", "Neutral", "More Emphasis"), 7)) +
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
     ggplot2::scale_fill_manual("", values = pal) +

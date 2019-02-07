@@ -161,14 +161,14 @@ tidy_tcps_windsor <- function(file){
   srvy <- rlang::quo(unique(data[["survey"]]))
 
 
-
   data <- data %>%
     dplyr::mutate(scale = dplyr::case_when(grepl("a\\b", .data$item, ignore.case = TRUE) ~ "agreement",
                                            grepl("_a_", .data$item, ignore.case = TRUE) ~ "agreement",
                                            grepl("_i_", .data$item, ignore.case = TRUE) ~ "importance",
                                            grepl("i\\b", .data$item, ignore.case = TRUE) ~ "importance"),
                   item = ifelse(grepl("lever", .data$item, ignore.case = TRUE), stringi::stri_extract_first_regex(.data$item, "lever\\d"),  gsub("_[ai]_", "_", .data$item, ignore.case = TRUE)),
-                  item = gsub("l(\\d)", "lever\\1", .data$item)) %>%
+                  item = gsub("l(\\d)", "lever\\1", .data$item),
+                  type = !!srvy) %>%
     dplyr::select(.data$survey, part_num = .data$participant, .data$scale, .data$item, .data$type, .data$value) %>%
     tidyr::spread("item", "value", drop = TRUE, convert = TRUE)
 
