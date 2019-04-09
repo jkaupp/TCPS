@@ -145,7 +145,7 @@ tidy_tcps_calgary <- function(file){
 #'
 #' @return a tidy data frame of TCPS data
 #' @export
-tidy_tcps_windsor <- function(file){
+tidy_tcps <- function(file){
 
   data <- haven::read_spss(file) %>%
     dplyr::mutate_if(haven::is.labelled, function(x) haven::as_factor(x, levels = "values")) %>%

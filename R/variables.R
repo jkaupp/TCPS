@@ -3,12 +3,12 @@
 .levers <-
   purrr::set_names(
     c(
-      "Lever 1: Institutional Initiatives",
-      "Lever 2: Assessment of Teaching",
-      "Lever 3: Implementing Effective Teaching",
-      "Lever 4: Infrastructure Supporting Teaching",
-      "Lever 5: Broad Engagement Around Teaching",
-      "Lever 6: Recognizing Effective Teaching"
+      "Lever 1: Institutional, strategic initiatives & practices prioritize effective teaching",
+      "Lever 2: Assessment of teaching is constructive & flexible",
+      "Lever 3: Implementing effective teaching",
+      "Lever 4: Infrastructure exists to support teaching",
+      "Lever 5: Broad engagement around teaching",
+      "Lever 6: Effective teaching is recognized and rewarded"
     ),
     c(
       "lever1",

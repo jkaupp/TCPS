@@ -23,6 +23,7 @@ Imports:
     readr,
     tidyr,
     gridExtra,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    grid
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

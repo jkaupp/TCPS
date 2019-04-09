@@ -33,8 +33,8 @@ likert_scale <- function(x, choice) {
                    plot.subtitle = element_text(hjust = 0),
                    axis.text.y = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 18),
-                   legend.position = "bottom",
-                   plot.background = element_rect(color = "black", size = 0.05))
+                   legend.position = "bottom")
+                   #plot.background = element_rect(color = "black", size = 0.05))
 
 
 }
@@ -62,10 +62,27 @@ lever_scale <- function(x, choice) {
 
     plots <- map(plots, remove_legend)
 
-    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("University of Windsor TCPS likert plots for %s", .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2, heights = grid::unit.c(unit(1, "npc") - lheight, lheight))
-  } else {
-    likert_scale(x, choice)
-  }
+    width <- 1/cols
+
+    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("TCPS likert plots for %s", .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2, heights = grid::unit.c(unit(1, "npc") - lheight, lheight))
+
+    if (cols == 2) {
+
+      grid::grid.lines(c(width, width), grid::unit.c(unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
+
+    }  else {
+
+      grid::grid.lines(c(width, width), grid::unit.c(unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
+      grid::grid.lines(c(2*width, 2*width), grid::unit.c(unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
+
+    }
+
+
+    } else {
+
+      likert_scale(x, choice)
+
+      }
 
 }
 
@@ -115,10 +132,10 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
   plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .data$value, y = .data$item, fill = .data$scale)) +
     ggridges::stat_density_ridges(quantile_lines = TRUE, quantiles = 2, alpha = 0.8, color = "white", rel_min_height = 0.01, size = 0.2, na.rm = TRUE) +
     ggplot2::scale_x_continuous(expand = c(0, 0.2), limits = c(0,6), breaks = c(1,3,5), labels = stringr::str_wrap(c("Less Emphasis", "Neutral", "More Emphasis"), 7)) +
-    ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 15)) +
+    ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 30)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
-    ggplot2::labs(x = NULL, y = NULL, title = "University of Windsor TCPS lever ridgeline plots", subtitle = "Yellow fill represents the agreement scale, blue fill represents the importance scale.") +
+    ggplot2::labs(x = NULL, y = NULL, title = "TCPS lever ridgeline plots", subtitle = "Blue fill represents the agreement scale, pink fill represents the importance scale.") +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
 
@@ -147,8 +164,8 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
       dplyr::summarize(n = sum(.data$n)) %>%
       purrr::flatten_chr()
 
-    plot + ggplot2::labs(title = "University of Windsor TCPS lever ridgeline plot",
-                         subtitle =sprintf("%s responses. Yellow fill represents the agreement scale, blue fill represents the importance scale.", counts))
+    plot + ggplot2::labs(title = "TCPS lever ridgeline plot",
+                         subtitle =sprintf("%s responses. Blue fill represents the agreement scale, pink fill represents the importance scale.", counts))
 
   }
 
