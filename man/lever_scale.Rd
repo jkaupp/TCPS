@@ -4,12 +4,14 @@
 \alias{lever_scale}
 \title{Produce the lever scale item visualization}
 \usage{
-lever_scale(x, choice)
+lever_scale(x, choice, name = "University Name")
 }
 \arguments{
 \item{x}{the input tidy tcps data frame}
 
 \item{choice}{the short name for the lever scale}
+
+\item{name}{name of the institution}
 }
 \value{
 nify plot

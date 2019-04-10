@@ -8,8 +8,8 @@ likert_scale <- function(x, choice) {
 
   type <- quo(unique(x[["survey"]]))
 
-  questions <- dplyr::filter(.tcps, .data$lever == choice, .data$survey == UQ(type)) %>%
-    tidyr::unite("question", lever, question, sep = "_") %>%
+  questions <- dplyr::filter(.tcps, .data$lever == choice, .data$survey == !!type) %>%
+    tidyr::unite("question", .data$lever, .data$question, sep = "_") %>%
     dplyr::pull(.data$question)
 
   scales <- dplyr::select(x, .data$survey, .data$part_num, .data$scale, questions)
@@ -29,12 +29,10 @@ likert_scale <- function(x, choice) {
                   x = NULL,
                   y = "Percent") +
     ggplot2::theme(strip.text.x = ggplot2::element_text(hjust = 0.5, size = 14),
-                   #axis.text.x = ggplot2::element_blank(),
-                   plot.subtitle = element_text(hjust = 0),
+                   plot.subtitle = ggplot2::element_text(hjust = 0),
                    axis.text.y = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 18),
                    legend.position = "bottom")
-                   #plot.background = element_rect(color = "black", size = 0.05))
 
 
 }
@@ -44,10 +42,11 @@ likert_scale <- function(x, choice) {
 #'
 #' @param x the input tidy tcps data frame
 #' @param choice the short name for the lever scale
+#' @param name name of the institution
 #'
 #' @return nify plot
 #' @export
-lever_scale <- function(x, choice) {
+lever_scale <- function(x, choice, name = "University Name") {
 
   cols <- length(unique(x[["survey"]]))
 
@@ -60,20 +59,20 @@ lever_scale <- function(x, choice) {
 
     lheight <- sum(legend$height)
 
-    plots <- map(plots, remove_legend)
+    plots <- purrr::map(plots, remove_legend)
 
     width <- 1/cols
 
-    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("TCPS likert plots for %s", .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2, heights = grid::unit.c(unit(1, "npc") - lheight, lheight))
+    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("%s %s", name, .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2, heights = grid::unit.c(grid::unit(1, "npc") - lheight, lheight))
 
     if (cols == 2) {
 
-      grid::grid.lines(c(width, width), grid::unit.c(unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
+      grid::grid.lines(c(width, width), grid::unit.c(grid::unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
 
     }  else {
 
-      grid::grid.lines(c(width, width), grid::unit.c(unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
-      grid::grid.lines(c(2*width, 2*width), grid::unit.c(unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
+      grid::grid.lines(c(width, width), grid::unit.c(grid::unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
+      grid::grid.lines(c(2*width, 2*width), grid::unit.c(grid::unit(1, "npc") - lheight, lheight), gp = grid::gpar(lwd = 0.2))
 
     }
 
@@ -92,10 +91,11 @@ lever_scale <- function(x, choice) {
 #' @param aggregate TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame
 #' @param lever short name of the lever of interest
 #' @param pal a simple two color palette for agreement/importance in the plot.
+#' @param name name of institution
 #'
 #' @return a nifty plot!
 #' @export
-lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
+lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   plot_data <- x %>%
     dplyr::select(-dplyr::contains("q")) %>%
@@ -103,7 +103,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   if (!is.null(lever)) {
 
-    lvr <- rlang::quo_name(lever)
+    lvr <- quo_name(lever)
 
     plot_data <- dplyr::filter(plot_data, .data$item == lvr) %>%
       dplyr::mutate(item = .levers[.data$item],
@@ -117,8 +117,8 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
   }
 
   means <- plot_data %>%
-    group_by(item) %>%
-    summarize(mean = mean(value, na.rm = TRUE))
+    dplyr::group_by(.data$item) %>%
+    dplyr::summarize(mean = mean(.data$value, na.rm = TRUE))
 
   order <- plot_data %>%
     dplyr::group_by(.data$item, .data$scale) %>%
@@ -135,7 +135,7 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 30)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
-    ggplot2::labs(x = NULL, y = NULL, title = "TCPS lever ridgeline plots", subtitle = "Blue fill represents the agreement scale, pink fill represents the importance scale.") +
+    ggplot2::labs(x = NULL, y = NULL, title = sprintf("%s TCPS Levers: Stakeholder Focus", name), subtitle = "Blue fill represents the agreement scale, pink fill represents the importance scale.") +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
 
@@ -164,8 +164,8 @@ lever_ridgeline <- function(x, lever = NULL, pal = pal_one, aggregate = FALSE) {
       dplyr::summarize(n = sum(.data$n)) %>%
       purrr::flatten_chr()
 
-    plot + ggplot2::labs(title = "TCPS lever ridgeline plot",
-                         subtitle =sprintf("%s responses. Blue fill represents the agreement scale, pink fill represents the importance scale.", counts))
+    plot + ggplot2::labs(title = sprintf("%s TCPS Levers: Institution Focus", name),
+                         subtitle = sprintf("%s responses. Blue fill represents the agreement scale, pink fill represents the importance scale.", counts))
 
   }
 

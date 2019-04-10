@@ -27,7 +27,7 @@ scale_helper <- function(data, survey, lever, questions) {
 #' @return a tidy data frame of likert data for a scale
 scale_likert <- function(x) {
 
-  srvy <- rlang::quo(unique(x[["survey"]]))
+  srvy <- quo(unique(x[["survey"]]))
 
   plot_data <- x %>%
     dplyr::mutate_at(dplyr::vars(dplyr::matches("\\d+")), function(x)
@@ -44,8 +44,8 @@ scale_likert <- function(x) {
       )) %>%
     dplyr::select(dplyr::matches("scale|lever\\d_q\\d"))
 
-  item_names <- tidyr::unite(.tcps, "question", lever, question, sep = "_") %>%
-    dplyr::filter(.data$question %in% names(plot_data), survey == rlang::UQ(srvy)) %>%
+  item_names <- tidyr::unite(.tcps, "question", .data$lever, .data$question, sep = "_") %>%
+    dplyr::filter(.data$question %in% names(plot_data), .data$survey == !!srvy) %>%
     dplyr::pull(.data$prompt) %>%
     tools::toTitleCase()
 
@@ -62,9 +62,12 @@ scale_likert <- function(x) {
 
 extract_legend <- function(x) {
   tmp <- ggplot2::ggplot_gtable(ggplot2::ggplot_build(x))
+
   leg <- which(sapply(tmp$grobs, function(x)
     x$name) == "guide-box")
+
   legend <- tmp$grobs[[leg]]
+
   return(legend)
 }
 
@@ -75,48 +78,3 @@ remove_legend <- function(x) {
   return(x)
 
 }
-
-
-grid_arrange_shared_legend <-
-  function(...,
-           ncol = length(list(...)),
-           nrow = 1,
-           position = c("bottom", "right"),
-           top) {
-    plots <- list(...)
-
-    position <- match.arg(position)
-    top <- match.arg(top)
-    g <-
-      ggplot2::ggplotGrob(plots[[1]] + ggplot2::theme(legend.position = position))$grobs
-    legend <- g[[which(sapply(g, function(x)
-      x$name) == "guide-box")]]
-    lheight <- sum(legend$height)
-    lwidth <- sum(legend$width)
-    gl <- lapply(plots, function(x)
-      x + theme(legend.position = "none"))
-    gl <- c(gl, ncol = ncol, nrow = nrow)
-
-    combined <- switch(
-      position,
-      "bottom" = gridExtra::arrangeGrob(
-        do.call(gridExtra::arrangeGrob, gl),
-        legend,
-        ncol = 1,
-        heights = grid::unit.c(unit(1, "npc") - lheight, lheight)
-      ),
-      "right" = gridExtra::arrangeGrob(
-        do.call(gridExtra::arrangeGrob, gl),
-        legend,
-        ncol = 2,
-        widths = unit.c(unit(1, "npc") - lwidth, lwidth)
-      )
-    )
-
-    grid::grid.newpage()
-    grid::grid.draw(combined)
-
-    # return gtable invisibly
-    invisible(combined)
-
-  }

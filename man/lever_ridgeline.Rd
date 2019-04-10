@@ -4,10 +4,13 @@
 \alias{lever_ridgeline}
 \title{Produce ridgeline plots for a TCPS lever.}
 \usage{
-lever_ridgeline(x, lever = NULL, pal = pal_one, aggregate = FALSE)
+lever_ridgeline(x, name = "University Name", lever = NULL,
+  pal = pal_one, aggregate = FALSE)
 }
 \arguments{
 \item{x}{input tidy TCPS data frame}
+
+\item{name}{name of institution}
 
 \item{lever}{short name of the lever of interest}
 
