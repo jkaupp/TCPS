@@ -135,7 +135,7 @@ lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 30)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
-    ggplot2::labs(x = NULL, y = NULL, title = sprintf("%s TCPS Levers: Stakeholder Focus", name), subtitle = "Blue fill represents the agreement scale, pink fill represents the importance scale.") +
+    ggplot2::labs(x = NULL, y = NULL, title = sprintf("%s TCPS Levers: Stakeholder Focus", name), subtitle = "The blue fill represents the distribution of the agreement scale, pink fill represents the distribution of the importance scale.  The white lines respresents the mean of each distribution.") +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
 
@@ -165,7 +165,7 @@ lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal
       purrr::flatten_chr()
 
     plot + ggplot2::labs(title = sprintf("%s TCPS Levers: Institution Focus", name),
-                         subtitle = sprintf("%s responses. Blue fill represents the agreement scale, pink fill represents the importance scale.", counts))
+                         subtitle = sprintf("%s responses. The blue fill represents the distribution of the agreement scale, pink fill represents the distribution of the importance scale.  The white lines respresents the mean of each distribution.", counts))
 
   }
 

@@ -11,7 +11,7 @@ library(knitr)
 library(tidyverse)
 library(tcps)
 
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 10)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 12, fig.height = 8)
 
 files <- dir(params$path, pattern = "sav", full.names = TRUE)
 
@@ -157,3 +157,5 @@ Themes include: Teaching awards exist on campus, Teaching is valued in instructo
 data %>%
   lever_scale("lever6", name = params$name)
 ```
+
+
