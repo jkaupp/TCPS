@@ -165,7 +165,7 @@ lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal
       purrr::flatten_chr()
 
     plot + ggplot2::labs(title = sprintf("%s TCPS Levers: Institution Focus", name),
-                         subtitle = sprintf("%s responses. The blue fill represents the distribution of the agreement scale, pink fill represents the distribution of the importance scale.  The white lines respresents the mean of each distribution.", counts))
+                         subtitle = stringr::str_wrap(sprintf("%s responses. The blue fill represents the distribution of the agreement scale, pink fill represents the distribution of the importance scale.  The white lines respresents the mean of each distribution.", counts), 180))
 
   }
 
