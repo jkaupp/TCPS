@@ -6,9 +6,9 @@
 #' @return nify plot!
 likert_scale <- function(x, choice) {
 
-  type <- quo(unique(x[["survey"]]))
+  type <- tools::toTitleCase(unique(x[["survey"]]))
 
-  questions <- dplyr::filter(.tcps, .data$lever == choice, .data$survey == !!type) %>%
+  questions <- dplyr::filter(.tcps, .data$lever == choice, .data$survey == {{type}}) %>%
     tidyr::unite("question", .data$lever, .data$question, sep = "_") %>%
     dplyr::pull(.data$question)
 
@@ -18,7 +18,7 @@ likert_scale <- function(x, choice) {
 
   scale_bar <- scale_likert(scales)
 
-  title <- sprintf("%s (%s)", unique(x[["survey"]]), counts)
+  title <- sprintf("%s (%s)", type, counts)
 
   ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
   ggplot2::update_geom_defaults("text", list(family = "Lato"))
@@ -46,7 +46,7 @@ likert_scale <- function(x, choice) {
 #'
 #' @return nify plot
 #' @export
-lever_scale <- function(x, choice, name = "University Name") {
+tcps_lever_scale <- function(x, choice, name = "University Name") {
 
   cols <- length(unique(x[["survey"]]))
 
@@ -63,7 +63,7 @@ lever_scale <- function(x, choice, name = "University Name") {
 
     width <- 1/cols
 
-    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("%s %s", name, .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "Oswald-Light"))), legend, nrow = 2, heights = grid::unit.c(grid::unit(1, "npc") - lheight, lheight))
+    gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plots, ncol = cols, top = grid::textGrob(sprintf("%s %s", name, .levers[choice]), hjust = 0, x = 0.01, gp = grid::gpar(fontsize = 20, fontfamily = "mono"))), legend, nrow = 2, heights = grid::unit.c(grid::unit(1, "npc") - lheight, lheight))
 
     if (cols == 2) {
 
@@ -95,7 +95,7 @@ lever_scale <- function(x, choice, name = "University Name") {
 #'
 #' @return a nifty plot!
 #' @export
-lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal_one, aggregate = FALSE) {
+tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal_one, aggregate = FALSE) {
 
   plot_data <- x %>%
     dplyr::select(-dplyr::contains("q")) %>%
@@ -103,14 +103,14 @@ lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal
 
   if (!is.null(lever)) {
 
-    lvr <- quo_name(lever)
-
-    plot_data <- dplyr::filter(plot_data, .data$item == lvr) %>%
+    plot_data <- dplyr::filter(plot_data, .data$item == {{lever}}) %>%
       dplyr::mutate(item = .levers[.data$item],
-                    scale = tools::toTitleCase(.data$scale))
+                    scale = tools::toTitleCase(.data$scale),
+                    survey = tools::toTitleCase(.data$survey))
 
   } else {
-    plot_data <- plot_data %>%
+
+     plot_data <- plot_data %>%
       dplyr::mutate(item = .levers[.data$item],
                     scale = tools::toTitleCase(.data$scale))
 
@@ -147,7 +147,7 @@ lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal = pal
 
     counts <- purrr::set_names(counts$n, counts$survey)
 
-    appender <- function(string) sprintf("%s (%s)", string, counts[string])
+    appender <- function(string) sprintf("%s (%s)", tools::toTitleCase(string), counts[string])
 
     if (!is.null(lever) | !aggregate){
       plot + ggplot2::facet_wrap(~survey, labeller = ggplot2::as_labeller(appender))

@@ -13,7 +13,6 @@ Imports:
     dplyr,
     magrittr,
     purrr,
-    stringi,
     ggplot2,
     ggridges,
     likert,
@@ -23,11 +22,14 @@ Imports:
     readr,
     tidyr,
     gridExtra,
-    rlang (>= 0.1.2),
     grid,
     rmarkdown,
-    janitor
+    janitor,
+    readxl,
+    rlang (>= 0.1.2)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Suggests: 
-    roxygen2
+    roxygen2,
+    knitr
+VignetteBuilder: knitr

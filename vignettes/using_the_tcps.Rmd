@@ -1,0 +1,66 @@
+---
+title: "The tcps: An R package to tidy, visualize and report on the Teaching Culture Perceptions Survey"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{using_the_tcps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tcps)
+```
+
+# About the Survey
+
+Institutional culture is defined as the embedded patterns, behaviours, shared values, beliefs, and ideologies of an educational institution (Kezar & Eckel, 2002). Institutional culture helps define the nature and reality of an educator or learner’s experience at an educational institution.
+
+The Teaching Culture Perceptions Survey (TCPS) has been developed to provide Canadian universities with a tool to assess instructors’, staff members’, and students’ perceptions of how teaching is valued at their universities. This new survey instrument is designed to document the value that Canadian Universities place on teaching, to provide feedback to universities on their teaching culture, and to monitor changes in that culture over time. The research will validate the institutional teaching culture survey instrument under development, and will help determine areas for improving the perceived teaching culture, which may lead to a more positive teaching environment, and ultimately, improved teaching and learning.
+
+For further information on the TCPS, please go to <https://qualityteachingculture.wordpress.com/>
+
+# About the tcps package
+
+During the course of the TCPS, a need to provide some form of reporting and visualization of results was realized.  In the early stages, many visualizations were created using R and the reports constructed in editing software.  This soon matured to a fully fledged R package capable of reading in survey data, calculating the lever scores, visualizing the data and producing a report template for further editing.  Any future development of the TCPS or of this package will be avaiable at <https://qualityteachingculture.wordpress.com/> and at <https://github.com/jkaupp/tcps>
+
+# Using the tcps package
+
+The package is freely available and requires R to be installed as well.  R is a free open-source software available at <https://www.r-project.org/>.  It is a command line program, but there are many high quality and free interactive development enviroments (IDE) one can use. Rstudio <https://www.rstudio.com> is a highly recommended IDE to download and install.
+
+To recap:
+
+1. Download & Install R <https://www.r-project.org/>
+2. Download & Install RStudio <https://www.rstudio.com>
+
+# Installing the tcps package
+
+The most straightforward way to install the tcps package is to use the code below:
+
+```{r}
+
+if ("devtools" %in% rownames(installed.packages())) {
+  devtools::install_github("jkaupp/tcps")
+}  else {
+  install.packages("devtools")
+  
+  devtools::install_github("jkaupp/tcps")
+}
+
+```
+
+# Before you get started
+
+In order to properly read and process the data across many different survey platforms and potential edits made by institutions some standarized elements needed to be in place.  The questions in the TCPS comprise 6 invidual levers, and each of those questions need to be clearly identified.  To do so this package looks to identify each TCPS question by a unique indentifer, shown below. 
+
+![](../vignettes/item_coding.png)
+
+These can either be placed within the survey platform as a question number (qualtrics, survey monkey, survey gizmo) or they can be added as the column header after the data has been exported to an excel file.
+
+

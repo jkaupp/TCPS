@@ -13,7 +13,7 @@ library(tcps)
 
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 12, fig.height = 8)
 
-files <- dir(params$path, pattern = "sav", full.names = TRUE)
+files <- dir(params$path, pattern = "xlsx", full.names = TRUE)
 
 data <- map_df(files, tidy_tcps)
 
@@ -59,8 +59,7 @@ Below you will find the overall aggregated survey results from the three groups 
 
 ```{r institutional_focus}
 
-data %>%
-  lever_ridgeline(name = params$name, pal = pal_one, aggregate = TRUE)
+  tcps_lever_ridgeline(data, name = params$name, pal = pal_one, aggregate = TRUE)
 
 ```
 
@@ -70,8 +69,8 @@ Three groups of institutional stakeholders have been surveyed for the TCPS - ins
 
 ```{r stakeholder_focus}
 
-data %>%
-  lever_ridgeline(name = params$name, pal = pal_one, aggregate = FALSE)
+
+  tcps_lever_ridgeline(data, name = params$name, pal = pal_one, aggregate = FALSE)
 
 ```
   
@@ -99,8 +98,7 @@ The Institutional Initiatives lever identifies indicators of the prioritization 
 Themes include: Teaching is considered a priority by institution and instructors, Effective teaching is defined in institution-wide documents, Institution-wide initiatives exist to promote innovative teaching practice
 
 ```{r  lever1, fig.width = 18, fig.height = 12, fig.retina=2, dpi = 200}
-data %>%
-  lever_scale("lever1", name = params$name)
+  tcps_lever_scale(data, "lever1", name = params$name)
 ```
 
 ## Teaching Culture Levers: Assessment of teaching is constructive & flexible
@@ -110,8 +108,7 @@ The Assessment of Teaching lever highlights indicators of the engagement, approa
 Themes include: Student evaluations are considered in teaching improvement, hiring, and promotion, Teaching is assessed in multiple ways (dossiers, peer review)
 
 ```{r  lever2, fig.width = 18, fig.height = 12, fig.retina=2, dpi = 200}
-data %>%
-  lever_scale("lever2", name = params$name)
+tcps_lever_scale(data, "lever2", name = params$name)
 ```
  
 ## Teaching Culture Levers: Implementing effective teaching
@@ -121,8 +118,7 @@ The Implementing Effective Teaching lever highlights indicators of diverse, well
 Themes include: A variety of teaching and learning approaches are used, Teaching and assessment methods align with learning outcomes, Instructors access teaching development opportunities
 
 ```{r  lever3, fig.width = 18, fig.height = 12, fig.retina=2, dpi = 200}
-data %>%
-  lever_scale("lever3", name = params$name)
+tcps_lever_scale(data, "lever3", name = params$name)
 ```
  
 ## Teaching Culture Levers: Infrastructure exists to support teaching
@@ -132,8 +128,7 @@ The Infrastructure Supporting Teaching lever articulates indicators that focus o
 Themes include: Classroom design supports learning, Instructors have access to teaching and learning resources, Instructors can get funds to develop their teaching (grants)
  
 ```{r  lever4, fig.width = 18, fig.height = 12, fig.retina=2, dpi = 200}
-data %>%
-  lever_scale("lever4", name = params$name)
+tcps_lever_scale(data, "lever4", name = params$name)
 ```
 
 ## Teaching Culture Levers: Broad engagement around teaching
@@ -143,8 +138,7 @@ The Broad Engagement Around Teaching lever articulates indicators that focus on 
 Themes include: Students are involved in teaching-related research & award committees, Teaching assistants support student learning, Collaborative teaching approaches are valued
  
 ```{r  lever5, fig.width = 18, fig.height = 12, fig.retina=2, dpi = 200}
-data %>%
-  lever_scale("lever5", name = params$name)
+tcps_lever_scale(data, "lever5", name = params$name)
 ```
 
 ## Teaching Culture Levers: Effective teaching is recognized and rewarded
@@ -154,8 +148,7 @@ The Recognizing Effective Teaching lever articulates indicators that focus on th
 Themes include: Teaching awards exist on campus, Teaching is valued in instructor hiring processes, Teaching accomplishments are celebrated
 
 ```{r  lever6, fig.width = 18, fig.height = 12, fig.retina=2, dpi = 200}
-data %>%
-  lever_scale("lever6", name = params$name)
+tcps_lever_scale(data, "lever6", name = params$name)
 ```
 
 

@@ -27,7 +27,7 @@ scale_helper <- function(data, survey, lever, questions) {
 #' @return a tidy data frame of likert data for a scale
 scale_likert <- function(x) {
 
-  srvy <- quo(unique(x[["survey"]]))
+  srvy <- tools::toTitleCase(unique(x[["survey"]]))
 
   plot_data <- x %>%
     dplyr::mutate_at(dplyr::vars(dplyr::matches("\\d+")), function(x)
@@ -45,7 +45,7 @@ scale_likert <- function(x) {
     dplyr::select(dplyr::matches("scale|lever\\d_q\\d"))
 
   item_names <- tidyr::unite(.tcps, "question", .data$lever, .data$question, sep = "_") %>%
-    dplyr::filter(.data$question %in% names(plot_data), .data$survey == !!srvy) %>%
+    dplyr::filter(.data$question %in% names(plot_data), .data$survey == {{srvy}}) %>%
     dplyr::pull(.data$prompt) %>%
     tools::toTitleCase()
 
