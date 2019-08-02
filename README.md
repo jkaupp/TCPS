@@ -21,5 +21,5 @@ There is a vignette in the package that walks through the use of the
 
 ``` r
 
-vignette("tcps")
+vignette("using_the_tcps")
 ```
