@@ -14,7 +14,10 @@ likert_scale <- function(x, choice) {
 
   scales <- dplyr::select(x, .data$survey, .data$part_num, .data$scale, questions)
 
-  counts <- dplyr::n_distinct(scales[["part_num"]])
+  counts <- scales %>%
+    dplyr::filter_at(dplyr::vars(dplyr::starts_with("lever")), dplyr::any_vars(!is.na(.))) %>%
+    dplyr::pull(.data$part_num) %>%
+    dplyr::n_distinct()
 
   scale_bar <- scale_likert(scales)
 
@@ -120,6 +123,8 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
     dplyr::group_by(.data$item) %>%
     dplyr::summarize(mean = mean(.data$value, na.rm = TRUE))
 
+  if (nrow(means) > 1) {
+
   order <- plot_data %>%
     dplyr::group_by(.data$item, .data$scale) %>%
     dplyr::summarize(mean = mean(.data$value, na.rm = TRUE)) %>%
@@ -128,6 +133,11 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
     dplyr::distinct(.data$item, .data$diff) %>%
     dplyr::arrange(.data$diff) %>%
     dplyr::pull(.data$item)
+  } else {
+
+    order <- means$item
+
+  }
 
   plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x = .data$value, y = .data$item, fill = .data$scale)) +
     ggridges::stat_density_ridges(quantile_lines = TRUE, quantiles = 2, alpha = 0.8, color = "white", rel_min_height = 0.01, size = 0.2, na.rm = TRUE) +
@@ -135,13 +145,14 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
     ggplot2::scale_y_discrete(expand = c(0, 0), limits = order,  labels = function(x) stringr::str_wrap(x, 30)) +
     ggplot2::scale_fill_manual("", values = pal) +
     ggplot2::scale_color_manual("", values = pal) +
-    ggplot2::labs(x = NULL, y = NULL, title = sprintf("%s TCPS Levers: Stakeholder Focus", name), subtitle = "The blue fill represents the distribution of the agreement scale, pink fill represents the distribution of the importance scale.  The white lines respresents the mean of each distribution.") +
+    ggplot2::labs(x = NULL, y = NULL, title = sprintf("%s TCPS Levers: Stakeholder Focus", name), subtitle = "The blue fill represents the distribution of the agreement scale.\nThe pink fill represents the distribution of the importance scale.\nThe white lines respresents the mean of each distribution.") +
     theme_tcps(grid = "XY") +
     ggplot2::theme(legend.position = "none")
 
   if (!aggregate) {
 
     counts <- plot_data %>%
+      dplyr::filter(!is.na(.data$value)) %>%
       dplyr::group_by(.data$survey) %>%
       dplyr::summarize(n = dplyr::n_distinct(.data$part_num))
 
@@ -158,6 +169,7 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
   } else {
 
     counts <- plot_data %>%
+      dplyr::filter(!is.na(.data$value)) %>%
       dplyr::group_by(.data$survey) %>%
       dplyr::summarize(n = dplyr::n_distinct(.data$part_num)) %>%
       dplyr::ungroup() %>%
@@ -165,7 +177,7 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
       purrr::flatten_chr()
 
     plot + ggplot2::labs(title = sprintf("%s TCPS Levers: Institution Focus", name),
-                         subtitle = stringr::str_wrap(sprintf("%s responses. The blue fill represents the distribution of the agreement scale, pink fill represents the distribution of the importance scale.  The white lines respresents the mean of each distribution.", counts), 180))
+                         subtitle = stringr::str_wrap(sprintf("%s responses. The blue fill represents the distribution of the agreement scale.\nThe pink fill represents the distribution of the importance scale. \nThe white lines respresents the mean of each distribution.", counts), 180))
 
   }
 

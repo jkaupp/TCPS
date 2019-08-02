@@ -1,9 +1,30 @@
+#' Read the TCPS from a qualtrics export file or files, and transform the data into a tidy format
+#'
+#' @param file full file path(s) to an excel file(s) exported from the survey system
+#'
+#' @return a single data frame containing only TCPS data, excludes all additional questions added to the survey.
+#' @export
+tcps_read_excel <- function(file) {
+
+  if (length(file) == 1) {
+
+    tcps_tidy_excel(file)
+
+  } else {
+
+    purrr::map_dfr(file, tcps_tidy_excel)
+
+  }
+
+
+}
+
+
 #' Read the TCPS from a qualtrics export file and transform the data into a tidy format
 #'
 #' @param file full file path to an excel file exported from the survey system
 #'
 #' @return a tidy data frame containing only TCPS data, excludes all additional questions added to the survey.
-#' @export
 tcps_tidy_excel <- function(file) {
 
   # Read in file with no column names
@@ -23,9 +44,13 @@ tcps_tidy_excel <- function(file) {
   metadata <- purrr::map_dfc(headers, ~t(header_dat[.x, ]))
 
   # Determine which column has question labels
-  col <- purrr::map(metadata, ~sum(stringr::str_detect(.x, "L\\d_I\\d_[AI]"))) %>%
-    purrr::keep(~.x>0) %>%
+  col <- purrr::map(metadata, ~sum(stringr::str_detect(.x, "L\\d-I\\d-[AI]"))) %>%
+    purrr::keep(~.x > 0) %>%
     names()
+
+  if (length(col) == 0){
+    stop("There are no identifiable lever items in the data.  Please run vignette(tcps) and read 'Before you get started'")
+  }
 
   # Remove the headers
   data <- dplyr::slice(data, -headers)
@@ -35,7 +60,7 @@ tcps_tidy_excel <- function(file) {
     janitor::clean_names() %>%
     dplyr::mutate(part_num = dplyr::row_number(.data$status)) %>%
     dplyr::select(.data$part_num, dplyr::matches("l\\d_i\\d_[ia]")) %>%
-    tidyr::gather(.data$question, .data$value, dplyr::matches("l\\d_i\\d_[ia]")) %>%
+    tidyr::gather("question", "value", dplyr::matches("l\\d_i\\d_[ia]")) %>%
     dplyr::mutate(scale = dplyr::case_when(grepl("_a$", .data$question, ignore.case = TRUE) ~ "agreement",
                                            grepl("_i$", .data$question, ignore.case = TRUE) ~ "importance"),
                   item = readr::parse_number(stringr::str_extract(.data$question, "i([1-9])")),
@@ -67,7 +92,6 @@ tcps_tidy_excel <- function(file) {
 #' @param file full file path to the SPSS .sav file
 #'
 #' @return a tidy data frame of TCPS data
-#' @export
 tcps_tidy_spss <- function(file) {
 
   data <- haven::read_spss(file) %>%

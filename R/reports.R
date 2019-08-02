@@ -6,14 +6,14 @@
 #'
 #' @return Report in provided format in current working directory
 #' @export
-generate_report <- function(path_to_data, name_of_school, format = "html") {
+tcps_report <- function(path_to_data, name_of_school, format = "html") {
 
   template <- file.path("inst/templates/tcps_report_template.Rmd")
 
   parameters <- list(path = path_to_data,
                      name = name_of_school)
 
-  out_file <- sprintf("%s TCPS Lever Report.%s", name_of_school, ifelse(format == "word", "docx", format))
+  out_file <- file.path(getwd(), sprintf("%s TCPS Lever Report.%s", name_of_school, ifelse(format == "word", "docx", format)))
 
   format <- switch(format,
                    html = rmarkdown::html_document(),

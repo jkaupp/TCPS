@@ -4,3 +4,4 @@
 ^testing$
 ^README\.Rmd$
 ^LICENSE\.md$
+^data-raw$
