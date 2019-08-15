@@ -30,7 +30,58 @@ devtools::install_github("jkaupp/tcps")
 There is a vignette in the package that walks through the use of the `tcps` package
 
 ```{r vignette, eval = FALSE}
-
 vignette("using_the_tcps")
+```
+
+## Quick Features
+
+### Importing your data
+
+Reading in properly prepared output from survey platforms, and creating the levers.
+
+```{r reading}
+library(tcps)
+
+# Load some sample data!
+file <- tcps_sample("staff_sample.xlsx")
+
+tcps_data <- tcps_read_excel(file)
+
+head(tcps_data)
+
+```
+
+### Visualizating Levers & Scales
+
+Provides functions to visualize the TCPS levers....
+
+```{r rideline, fig.width = 10, fig.height = 5}
+tcps_lever_ridgeline(tcps_data, name = "Prestigous Institution", lever = "lever1")
+```
+
+as well as functionality to visualize the scales/quesitons that comprise the lever.
+
+```{r scale1, fig.width = 8, fig.height = 8}
+tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigous Institution")
+```
+
+## Summary Statistics
+
+You can obtain simple summary statistics by scale, survey type, lever and question.
+
+```{r stats, fig.width = 8, fig.height = 8}
+tcps_summary_stats(tcps_data)
+```
+
+
+## Reporting
+
+There is also functions to produce a boilerplate word document report (across all groups: Staff, Faculty and Students) simply by providing a path to a directory where each prepared file resides.
+
+```{r report, eval = FALSE}
+
+path <- dirname(tcps_sample("faculty_sample.xlsx", full.names = TRUE))
+
+tcps_report(path_to_data = path, name_of_school = "Prestigous Institution", format = "word")
 
 ```

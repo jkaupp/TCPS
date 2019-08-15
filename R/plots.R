@@ -8,7 +8,7 @@ likert_scale <- function(x, choice) {
 
   type <- tools::toTitleCase(unique(x[["survey"]]))
 
-  questions <- dplyr::filter(.tcps, .data$lever == choice, .data$survey == {{type}}) %>%
+  questions <- dplyr::filter(tcps_structure, .data$lever == choice, .data$survey == {{type}}) %>%
     tidyr::unite("question", .data$lever, .data$question, sep = "_") %>%
     dplyr::pull(.data$question)
 
