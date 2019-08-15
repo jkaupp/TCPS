@@ -16,12 +16,23 @@ knitr::opts_chunk$set(
 
 The goal of tcps package is to provide functionality to tidy and visualize the results of running the teaching culture perception survey at an institution.
 
+# Using the tcps package
+
+The package is freely available and requires R to be installed as well.  R is a free open-source software available at <https://www.r-project.org/>.  It is a command line program, but there are many high quality and free interactive development environments (IDE) one can use. Rstudio <https://www.rstudio.com> is a highly recommended IDE to download and install.
+
+To recap:
+
+1. Download & Install R <https://www.r-project.org/>
+2. Download & Install RStudio <https://www.rstudio.com>
+3. Launch RStudio (which will start up an instance of R as well)
+
 ## Installation
 
-You can install tcps from GitHub with:
+You can install tcps from GitHub, by first installing and loading the `devtools` package
 
 ```{r gh-installation, eval = FALSE}
-# install.packages("devtools")
+install.packages("devtools")
+
 devtools::install_github("jkaupp/tcps")
 ```
 
@@ -51,18 +62,18 @@ head(tcps_data)
 
 ```
 
-### Visualizating Levers & Scales
+### Visualizing Levers & Scales
 
 Provides functions to visualize the TCPS levers....
 
 ```{r rideline, fig.width = 10, fig.height = 5}
-tcps_lever_ridgeline(tcps_data, name = "Prestigous Institution", lever = "lever1")
+tcps_lever_ridgeline(tcps_data, name = "Prestigious Institution", lever = "lever1")
 ```
 
-as well as functionality to visualize the scales/quesitons that comprise the lever.
+as well as functionality to visualize the scales/questions that comprise the lever.
 
 ```{r scale1, fig.width = 8, fig.height = 8}
-tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigous Institution")
+tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigious Institution")
 ```
 
 ## Summary Statistics
@@ -82,6 +93,6 @@ There is also functions to produce a boilerplate word document report (across al
 
 path <- dirname(tcps_sample("faculty_sample.xlsx", full.names = TRUE))
 
-tcps_report(path_to_data = path, name_of_school = "Prestigous Institution", format = "word")
+tcps_report(path_to_data = path, name_of_school = "Prestigious Institution", format = "word")
 
 ```

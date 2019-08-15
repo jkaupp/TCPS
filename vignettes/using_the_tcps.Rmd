@@ -28,11 +28,11 @@ For further information on the TCPS, please go to <https://qualityteachingcultur
 
 # About the tcps package
 
-During the course of the TCPS, a need to provide some form of reporting and visualization of results was realized.  In the early stages, many visualizations were created using R and the reports constructed in editing software.  This soon matured to a fully fledged R package capable of reading in survey data, calculating the lever scores, visualizing the data and producing a report template for further editing.  Any future development of the TCPS or of this package will be avaiable at <https://qualityteachingculture.wordpress.com/> and at <https://github.com/jkaupp/tcps>
+During the course of the TCPS, a need to provide some form of reporting and visualization of results was realized.  In the early stages, many visualizations were created using R and the reports constructed in editing software.  This soon matured to a fully fledged R package capable of reading in survey data, calculating the lever scores, visualizing the data and producing a report template for further editing.  Any future development of the TCPS or of this package will be available at <https://qualityteachingculture.wordpress.com/> and at <https://github.com/jkaupp/tcps>
 
 # Using the tcps package
 
-The package is freely available and requires R to be installed as well.  R is a free open-source software available at <https://www.r-project.org/>.  It is a command line program, but there are many high quality and free interactive development enviroments (IDE) one can use. Rstudio <https://www.rstudio.com> is a highly recommended IDE to download and install.
+The package is freely available and requires R to be installed as well.  R is a free open-source software available at <https://www.r-project.org/>.  It is a command line program, but there are many high quality and free interactive development environments (IDE) one can use. RStudio <https://www.rstudio.com> is a highly recommended IDE to download and install.
 
 To recap:
 
@@ -57,7 +57,7 @@ if ("devtools" %in% rownames(installed.packages())) {
 
 # Before you get started
 
-In order to properly read and process the data across many different survey platforms and potential edits made by institutions some standarized elements needed to be in place.  The questions in the TCPS comprise 6 invidual levers, and each of those questions need to be clearly identified.  To do so this package looks to identify each TCPS question by a unique indentifer, shown below. 
+In order to properly read and process the data across many different survey platforms and potential edits made by institutions some standardized elements needed to be in place.  The questions in the TCPS comprise 6 individual levers, and each of those questions need to be clearly identified.  To do so this package looks to identify each TCPS question by a unique identifier, shown below. 
 
 ![](../vignettes/item_coding.png)
 
@@ -69,7 +69,7 @@ Failure to do so will render this program unable to properly determine the items
 
 # Reading in your TCPS data with `tcps_read_excel()`
 
-With your properly prepared excel file of exported data from your survey platform of choice, you can use the `tcps_read_excel()` function to read in, tidy and agument your data with the TCPS lever scores.
+With your properly prepared excel file of exported data from your survey platform of choice, you can use the `tcps_read_excel()` function to read in, tidy and augment your data with the TCPS lever scores.
 
 ```{r reading}
 library(tcps)
@@ -107,13 +107,13 @@ Now that the excel file has been read into R, you can use some built in function
 
 ### Single/All Levers for a Single Group
 ```{r rideline, fig.width = 10, fig.height = 5}
-tcps_lever_ridgeline(tcps_data, name = "Prestigous Institution", lever = "lever1")
+tcps_lever_ridgeline(tcps_data, name = "Prestigious Institution", lever = "lever1")
 ```
 
-You can also visualize all levers at once, not specifying a lever or setting `lever = NULL`.  This does provide a mode homogeneous view of the gaps between agreement and importance across all levers while sacrificing some detail for each individual lever distibution.  
+You can also visualize all levers at once, not specifying a lever or setting `lever = NULL`.  This does provide a mode homogeneous view of the gaps between agreement and importance across all levers while sacrificing some detail for each individual lever distribution.  
 
 ```{r rideline_all, fig.width = 10, fig.height = 5}
-tcps_lever_ridgeline(tcps_data, name = "Prestigous Institution")
+tcps_lever_ridgeline(tcps_data, name = "Prestigious Institution")
 ```
 
 ### Single/All Levers for All Groups
@@ -121,7 +121,7 @@ tcps_lever_ridgeline(tcps_data, name = "Prestigous Institution")
 You can also visualize the combined surveys data (faculty, staff and student) all on the same chart by passing the full data set.  Similar to before you can use the `lever` argument to visualize a single lever, if you wish. 
 
 ```{r rideline_all_groups, fig.width =10, fig.height = 5}
-tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution")
+tcps_lever_ridgeline(all_tcps_data, name = "Prestigious Institution")
 ```
 
 ### Single/All Levers by Aggregating Groups
@@ -129,7 +129,7 @@ tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution")
 You can set `aggregate = TRUE` in the function to combine the groups to provide an "Institutional View".  Again, you can use the `lever` argument to view a single lever, or leave it blank for all levers.
 
 ```{r rideline_institution, fig.width = 10, fig.height = 5}
-tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution", aggregate = TRUE)
+tcps_lever_ridgeline(all_tcps_data, name = "Prestigious Institution", aggregate = TRUE)
 ```
 
 ### Changing Colors
@@ -137,21 +137,21 @@ tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution", aggregate =
 You can change the color sets in the two distributions using the `pal` argument.  There are three built in options, `pal = pal_one` (default), `pal = pal_two`, `pal = pal_three` or you can specify a two element color vector of your own choosing. 
 
 ```{r color, fig.show='hold', fig.align='center', fig.width = 10, fig.height = 5, out.width = "100%"}
-tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution", aggregate = TRUE, pal = pal_two)
-tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution", aggregate = TRUE, pal = pal_three)
-tcps_lever_ridgeline(all_tcps_data, name = "Prestigous Institution", aggregate = TRUE, pal = c("orange","dodgerblue"))
+tcps_lever_ridgeline(all_tcps_data, name = "Prestigious Institution", aggregate = TRUE, pal = pal_two)
+tcps_lever_ridgeline(all_tcps_data, name = "Prestigious Institution", aggregate = TRUE, pal = pal_three)
+tcps_lever_ridgeline(all_tcps_data, name = "Prestigious Institution", aggregate = TRUE, pal = c("orange","dodgerblue"))
 ```
 
 # Visualizing your TCPS Lever Scales with `tcps_lever_scale()`
 
-`tcps_lever_scale()` is used to visualize the distibutions in each question that comprises a lever. The questions are organizd in numeric order starting at the first question in the lever.  Each question shows two bars, the top bar represents importance, the bottom bar represents agreement.  The 5 response categories of each are color coded and centered around the neutral response ("Somewhat").  The numbers on the left and right indicate the percentage of responses of the top two ("Quite a Bit" and "A Great Deal") and bottom two ("Very Little" and "Not At All") categories.  This provides the item by item distribution view, highlighting the high response options and illustrating how indiviudal scale skew can affect the lever distribution.
+`tcps_lever_scale()` is used to visualize the distributions in each question that comprises a lever. The questions are organized in numeric order starting at the first question in the lever.  Each question shows two bars, the top bar represents importance, the bottom bar represents agreement.  The 5 response categories of each are color coded and centered around the neutral response ("Somewhat").  The numbers on the left and right indicate the percentage of responses of the top two ("Quite a Bit" and "A Great Deal") and bottom two ("Very Little" and "Not At All") categories.  This provides the item by item distribution view, highlighting the high response options and illustrating how individual scale skew can affect the lever distribution.
 
 ### Single Lever for a Single Group
 
 Due to space requirements you can only visualize a single lever at a time.
 
 ```{r scale1, fig.width = 8, fig.height = 8}
-tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigous Institution")
+tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigious Institution")
 ```
 
 ### Single Lever for a Single Group
@@ -159,14 +159,14 @@ tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigous Institution")
 Simply plotting combined data and specifying a lever will plot the scale items for each lever side by side.  Note that the lever scale questions differ between groups.
 
 ```{r scale2, fig.width = 12, fig.height = 8, out.width="100%"}
-tcps_lever_scale(all_tcps_data, "lever2", name = "Prestigous Institution")
+tcps_lever_scale(all_tcps_data, "lever2", name = "Prestigious Institution")
 ```
 
 # Reporting on your TCPS data
 
 You can use the visualization to construct your own report by various methods.  You can:
 
-1. Save them as images to use outside of R (e.g. microsoft word)
+1. Save them as images to use outside of R (e.g. Microsoft word)
 2. Investigate the `rmarkdown` package to write reports in R.
 3. Use the handy `tcps_report()` function to produce a boilerplate report in html, pdf or word.
 
@@ -174,7 +174,7 @@ You can use the visualization to construct your own report by various methods.  
 
 path <- dirname(tcps_sample("faculty_sample.xlsx", full.names = TRUE))
 
-tcps_report(path_to_data = path, name_of_school = "Prestigous Institution", format = "word")
+tcps_report(path_to_data = path, name_of_school = "Prestigious Institution", format = "word")
 
 ```
 
