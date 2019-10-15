@@ -2,7 +2,7 @@
 % Please edit documentation in R/reports.R
 \name{tcps_report}
 \alias{tcps_report}
-\title{Generate TCPS report}
+\title{Generate the boilerplate report from provided TCPS data}
 \usage{
 tcps_report(path_to_data, name_of_school, format = "html")
 }
@@ -17,5 +17,5 @@ tcps_report(path_to_data, name_of_school, format = "html")
 Report in provided format in current working directory
 }
 \description{
-Generate TCPS report
+Generate the boilerplate report from provided TCPS data
 }

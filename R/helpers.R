@@ -1,11 +1,11 @@
-#' Helper function to properly process and tidy TCPS data. Uses a tibble as input, and pmap to run the function
-#'
-#' @param data nested data column of the input tibble
-#' @param survey survey type
-#' @param lever lever choice
-#' @param questions nested list of questions for each lever
-#'
-#' @return tidied tibble for each choice
+# Helper function to properly process and tidy TCPS data. Uses a tibble as input, and pmap to run the function
+#
+# @param data nested data column of the input tibble
+# @param survey survey type
+# @param lever lever choice
+# @param questions nested list of questions for each lever
+#
+# @return tidied tibble for each choice
 scale_helper <- function(data, survey, lever, questions) {
 
   dplyr::select(data,
@@ -20,11 +20,11 @@ scale_helper <- function(data, survey, lever, questions) {
 
 }
 
-#' Likert scale helper/contructor for lever_scale
-#'
-#' @param x input data frame to process
-#'
-#' @return a tidy data frame of likert data for a scale
+# Likert scale helper/contructor for lever_scale
+#
+# @param x input data frame to process
+#
+# @return a tidy data frame of likert data for a scale
 scale_likert <- function(x) {
 
   srvy <- tools::toTitleCase(unique(x[["survey"]]))

@@ -3,12 +3,12 @@
 \docType{data}
 \name{pal_two}
 \alias{pal_two}
-\title{Ridgeline palette two}
+\title{TCPS ridgeline palette option #2 for use in tcps_lever_ridgeline}
 \format{An object of class \code{character} of length 2.}
 \usage{
 pal_two
 }
 \description{
-Ridgeline palette two
+TCPS ridgeline palette option #2 for use in tcps_lever_ridgeline
 }
 \keyword{datasets}

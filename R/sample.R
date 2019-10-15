@@ -1,4 +1,4 @@
-#' Get path to tcps sample
+#' Retrieve file paths to TCPS sample data.
 #'
 #' tcps comes bundled with some example files in its `inst/extdata`
 #' directory. This function make them easy to access.

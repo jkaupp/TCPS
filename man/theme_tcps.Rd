@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{theme_tcps}
 \alias{theme_tcps}
-\title{theme_tcps}
+\title{A Custom ggplot2 theme for the TCPS}
 \usage{
 theme_tcps(base_family = "mono", base_size = 11,
   strip_text_family = base_family, strip_text_size = 12,
@@ -59,7 +59,7 @@ heavy credits for influencing the theme function
 go to @hrbrmstr (Bob Rudis)
 }
 \details{
-It requires installing Oswald & Oxygen fonts unless you change the font parameters
+Proper display of the theme requires installing Oswald & Oxygen fonts unless you change the font parameters
 
 \url{https://www.google.com/fonts}
 }

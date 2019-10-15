@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{tcps_lever_scale}
 \alias{tcps_lever_scale}
-\title{Produce the lever scale item visualization}
+\title{Visualize the likert scale items comprising a lever}
 \usage{
 tcps_lever_scale(x, choice, name = "University Name")
 }
@@ -17,5 +17,5 @@ tcps_lever_scale(x, choice, name = "University Name")
 nify plot
 }
 \description{
-Produce the lever scale item visualization
+Visualize the likert scale items comprising a lever
 }

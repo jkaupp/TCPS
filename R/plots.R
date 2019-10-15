@@ -1,9 +1,3 @@
-#' Create a likert scale plot for agreement and importance for a TCPS lever
-#'
-#' @param x input tidy TCPS data
-#' @param choice lever choice
-#'
-#' @return nify plot!
 likert_scale <- function(x, choice) {
 
   type <- tools::toTitleCase(unique(x[["survey"]]))
@@ -41,7 +35,7 @@ likert_scale <- function(x, choice) {
 }
 
 
-#' Produce the lever scale item visualization
+#' Visualize the likert scale items comprising a lever
 #'
 #' @param x the input tidy tcps data frame
 #' @param choice the short name for the lever scale
@@ -88,7 +82,7 @@ tcps_lever_scale <- function(x, choice, name = "University Name") {
 
 }
 
-#' Produce ridgeline plots for a TCPS lever.
+#' Visualize TCPS lever data as a ridline plot contrasting agreement and importance
 #'
 #' @param x input tidy TCPS data frame
 #' @param aggregate TRUE/FALSE.  If TRUE, aggregate responses across all populations (surveys) in the data frame

@@ -3,7 +3,6 @@
 export("%>%")
 export(":=")
 export(.data)
-export(.levers)
 export(as_label)
 export(as_name)
 export(enquo)

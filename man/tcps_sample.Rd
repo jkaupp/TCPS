@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample.R
 \name{tcps_sample}
 \alias{tcps_sample}
-\title{Get path to tcps sample}
+\title{Retrieve file paths to TCPS sample data.}
 \usage{
 tcps_sample(path = NULL, ...)
 }

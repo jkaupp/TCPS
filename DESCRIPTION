@@ -33,3 +33,5 @@ Suggests:
     roxygen2,
     knitr
 VignetteBuilder: knitr
+URL: https://github.com/jkaupp/tcps
+BugReports: https://github.com/jkaupp/tcps/issues

@@ -3,12 +3,12 @@
 \docType{data}
 \name{tcps_structure}
 \alias{tcps_structure}
-\title{TCPS Shell}
+\title{A tibble containing the structure of each TCPS survey.}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 101 rows and 5 columns.}
 \usage{
 tcps_structure
 }
 \description{
-TCPS Shell
+A tibble containing the structure of each TCPS survey.
 }
 \keyword{datasets}

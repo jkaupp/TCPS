@@ -1,10 +1,10 @@
-#' theme_tcps
+#' A Custom ggplot2 theme for the TCPS
 #'
 #' Custom ggplot2 theme for the TCPS Package
 #' heavy credits for influencing the theme function
 #' go to @@hrbrmstr (Bob Rudis)
 #'
-#' It requires installing Oswald & Oxygen fonts unless you change the font parameters
+#' Proper display of the theme requires installing Oswald & Oxygen fonts unless you change the font parameters
 #'
 #' \url{https://www.google.com/fonts}
 #'

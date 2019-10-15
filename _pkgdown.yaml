@@ -1,0 +1,5 @@
+title: tcps
+url: http://jkaupp.github.io/tcps
+template:
+  params:
+    bootswatch: flatly

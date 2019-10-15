@@ -1,4 +1,4 @@
-#' Generate TCPS report
+#' Generate the boilerplate report from provided TCPS data
 #'
 #' @param path_to_data full file path to the directory containing the TCPS data sets
 #' @param name_of_school string of the name of the institution

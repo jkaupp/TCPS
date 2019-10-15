@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{tcps_lever_ridgeline}
 \alias{tcps_lever_ridgeline}
-\title{Produce ridgeline plots for a TCPS lever.}
+\title{Visualize TCPS lever data as a ridline plot contrasting agreement and importance}
 \usage{
 tcps_lever_ridgeline(x, name = "University Name", lever = NULL,
   pal = pal_one, aggregate = FALSE)
@@ -22,5 +22,5 @@ tcps_lever_ridgeline(x, name = "University Name", lever = NULL,
 a nifty plot!
 }
 \description{
-Produce ridgeline plots for a TCPS lever.
+Visualize TCPS lever data as a ridline plot contrasting agreement and importance
 }
