@@ -1,5 +1,6 @@
 ---
-title: "The tcps: An R package to tidy, visualize and report on the Teaching Culture Perceptions Survey"
+title: "Using the tcps"
+subtitle: 'An R package to tidy, visualize and report on the Teaching Culture Perceptions Survey'
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{using_the_tcps}
@@ -158,7 +159,7 @@ tcps_lever_scale(tcps_data, choice =  "lever1", name = "Prestigious Institution"
 
 Simply plotting combined data and specifying a lever will plot the scale items for each lever side by side.  Note that the lever scale questions differ between groups.
 
-```{r scale2, fig.width = 12, fig.height = 8, out.width="100%"}
+```{r scale2, fig.width = 20, fig.height = 10}
 tcps_lever_scale(all_tcps_data, "lever2", name = "Prestigious Institution")
 ```
 
