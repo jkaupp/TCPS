@@ -13,9 +13,7 @@ tcps_sample(path = NULL, ...)
 }
 \description{
 tcps comes bundled with some example files in its \code{inst/extdata}
-directory. This function make them easy to access.
-}
-\examples{
-tcps_sample()
-tcps_sample("student_sample.xlsx")
+directory. This function make them easy to access by passing the sample name
+as a quoted string.  It can be one of "staff_sample.xlsx", "student_sample.xlsx" or
+"faculty_sample.xlsx"
 }

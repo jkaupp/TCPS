@@ -7,14 +7,11 @@
 tcps_summary_stats(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{a tidy tcps data frame from tcps_read_excel()}
 }
 \value{
 a data frame of summary statistics for each scale, survey group and question
 }
 \description{
 Calculate basic summary statistics for a tidied data frame of TCPS data
-}
-\examples{
-tcps_summary_stats(tcps_sample("staff_sample.xlsx"))
 }

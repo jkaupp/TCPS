@@ -24,7 +24,9 @@ Imports:
     rmarkdown,
     janitor,
     readxl,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    stats,
+    tidyr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Suggests: 
