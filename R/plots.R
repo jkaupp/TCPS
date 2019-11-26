@@ -40,10 +40,20 @@ likert_scale <- function(x, choice) {
 #' @param x the input tidy tcps data frame
 #' @param choice the short name for the lever scale
 #' @param name name of the institution
+#' @param group one of `c('faculty', 'staff', 'student)` or NULL to plot all groups
 #'
 #' @return nify plot
 #' @export
-tcps_lever_scale <- function(x, choice, name = "University Name") {
+tcps_lever_scale <- function(x, choice, group = NULL, name = "University Name") {
+
+  if (!is.null(group)) {
+
+    if(group != "all") {
+
+      x <- dplyr::filter(x, survey == group)
+    }
+
+  }
 
   cols <- length(unique(x[["survey"]]))
 
@@ -76,7 +86,8 @@ tcps_lever_scale <- function(x, choice, name = "University Name") {
 
     } else {
 
-      likert_scale(x, choice)
+      likert_scale(x, choice) +
+        ggplot2::labs(title = sprintf("%s %s", name, .levers[choice]))
 
       }
 
@@ -100,14 +111,23 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
 
   if (!is.null(lever)) {
 
-    plot_data <- dplyr::filter(plot_data, .data$item == {{lever}}) %>%
-      dplyr::mutate(item = .levers[.data$item],
-                    scale = tools::toTitleCase(.data$scale),
-                    survey = tools::toTitleCase(.data$survey))
+    if (lever == "all") {
+      lever <- NULL
+
+      plot_data <- plot_data %>%
+        dplyr::mutate(item = .levers[.data$item],
+                      scale = tools::toTitleCase(.data$scale))
+    } else {
+
+      plot_data <- dplyr::filter(plot_data, .data$item == {{lever}}) %>%
+        dplyr::mutate(item = .levers[.data$item],
+                      scale = tools::toTitleCase(.data$scale),
+                      survey = tools::toTitleCase(.data$survey))
+    }
 
   } else {
 
-     plot_data <- plot_data %>%
+    plot_data <- plot_data %>%
       dplyr::mutate(item = .levers[.data$item],
                     scale = tools::toTitleCase(.data$scale))
 

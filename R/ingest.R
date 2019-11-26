@@ -23,9 +23,10 @@ tcps_read_excel <- function(file) {
 #' Read the TCPS from a qualtrics export file and transform the data into a tidy format
 #'
 #' @param file full file path to an excel file exported from the survey system
+#' @param name used for tcpsGUI to properly name the file.
 #'
 #' @return a tidy data frame containing only TCPS data, excludes all additional questions added to the survey.
-tcps_tidy_excel <- function(file) {
+tcps_tidy_excel <- function(file, name = NULL) {
 
   # Read in file with no column names
   data <- suppressMessages(readxl::read_excel(file, col_names = FALSE))
@@ -75,12 +76,23 @@ tcps_tidy_excel <- function(file) {
     dplyr::mutate(value = ifelse(is.nan(.data$value), NA_real_, .data$value),
                   question = sprintf("lever%s", .data$lever))
 
+
+  survey_type <- if (is.null(name)) {
+
+    survey_type <- stringr::str_extract(tolower(basename(file)), "faculty|staff|student")
+
+  } else {
+
+    survey_type <- stringr::str_extract(tolower(name), "faculty|staff|student")
+
+  }
+
   # Bind both together and put into wide format
   long_data %>%
     dplyr::mutate(value = as.numeric(.data$value)) %>%
     dplyr::bind_rows(levers) %>%
     dplyr::mutate(question = dplyr::if_else(is.na(.data$item), .data$question, sprintf("lever%s_q%s", .data$lever, .data$item)),
-                survey = stringr::str_extract(tolower(basename(file)), "faculty|staff|student")) %>%
+                survey = survey_type) %>%
     dplyr::select(.data$part_num, .data$scale, .data$survey, .data$question, .data$value) %>%
     tidyr::spread(.data$question, .data$value, drop = TRUE)
 }
