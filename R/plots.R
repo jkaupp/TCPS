@@ -18,7 +18,7 @@ likert_scale <- function(x, choice) {
   title <- sprintf("%s (%s)", type, counts)
 
   ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
-  ggplot2::update_geom_defaults("text", list(family = "Lato"))
+  #ggplot2::update_geom_defaults("text", list(family = "Lato"))
 
  graphics::plot(scale_bar, colors = viridisLite::viridis(5, option = "cividis"), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
     theme_tcps(grid = FALSE) +
@@ -40,10 +40,20 @@ likert_scale <- function(x, choice) {
 #' @param x the input tidy tcps data frame
 #' @param choice the short name for the lever scale
 #' @param name name of the institution
+#' @param group one of 'faculty', 'staff', 'student or NULL to plot all groups
 #'
 #' @return nify plot
 #' @export
-tcps_lever_scale <- function(x, choice, name = "University Name") {
+tcps_lever_scale <- function(x, choice, group = NULL, name = "University Name") {
+
+  if (!is.null(group)) {
+
+    if(group != "all") {
+
+      x <- dplyr::filter(x, .data$survey == group)
+    }
+
+  }
 
   cols <- length(unique(x[["survey"]]))
 
@@ -76,7 +86,8 @@ tcps_lever_scale <- function(x, choice, name = "University Name") {
 
     } else {
 
-      likert_scale(x, choice)
+      likert_scale(x, choice) +
+        ggplot2::labs(title = sprintf("%s %s", name, .levers[choice]))
 
       }
 
@@ -100,14 +111,23 @@ tcps_lever_ridgeline <- function(x, name = "University Name", lever = NULL, pal 
 
   if (!is.null(lever)) {
 
-    plot_data <- dplyr::filter(plot_data, .data$item == {{lever}}) %>%
-      dplyr::mutate(item = .levers[.data$item],
-                    scale = tools::toTitleCase(.data$scale),
-                    survey = tools::toTitleCase(.data$survey))
+    if (lever == "all") {
+      lever <- NULL
+
+      plot_data <- plot_data %>%
+        dplyr::mutate(item = .levers[.data$item],
+                      scale = tools::toTitleCase(.data$scale))
+    } else {
+
+      plot_data <- dplyr::filter(plot_data, .data$item == {{lever}}) %>%
+        dplyr::mutate(item = .levers[.data$item],
+                      scale = tools::toTitleCase(.data$scale),
+                      survey = tools::toTitleCase(.data$survey))
+    }
 
   } else {
 
-     plot_data <- plot_data %>%
+    plot_data <- plot_data %>%
       dplyr::mutate(item = .levers[.data$item],
                     scale = tools::toTitleCase(.data$scale))
 

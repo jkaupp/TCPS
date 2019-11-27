@@ -7,7 +7,7 @@
 tcps_summary_stats(data)
 }
 \arguments{
-\item{data}{a tidy tcps data frame from tcps_read_excel()}
+\item{data}{tidy dataframe of tcps data from tcps_read_excel}
 }
 \value{
 a data frame of summary statistics for each scale, survey group and question

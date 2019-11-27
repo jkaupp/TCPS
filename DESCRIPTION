@@ -26,9 +26,12 @@ Imports:
     readxl,
     rlang (>= 0.1.2),
     stats,
+    shiny,
+    here,
+    DT,
     tidyr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 Suggests: 
     roxygen2,
     knitr

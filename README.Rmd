@@ -100,3 +100,8 @@ path <- dirname(tcps_sample("faculty_sample.xlsx", full.names = TRUE))
 tcps_report(path_to_data = path, name_of_school = "Prestigious Institution", format = "word")
 
 ```
+
+
+## Using the GUI
+
+To help with those new to R, a GUI interface application (built with the `shiny` package) can be used by calling `tcps_gui()` at the command line after loading the `tcps` package. 

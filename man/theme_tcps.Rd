@@ -4,14 +4,27 @@
 \alias{theme_tcps}
 \title{A Custom ggplot2 theme for the TCPS}
 \usage{
-theme_tcps(base_family = "mono", base_size = 11,
-  strip_text_family = base_family, strip_text_size = 12,
-  plot_title_family = "mono", plot_title_size = 16,
-  plot_title_margin = 10, subtitle_family = "mono",
-  subtitle_size = 12, subtitle_margin = 15, caption_family = "serif",
-  caption_size = 9, caption_margin = 10, axis_title_family = "serif",
-  axis_title_size = 9, axis_title_just = "mm", grid = TRUE,
-  axis = FALSE, ticks = FALSE)
+theme_tcps(
+  base_family = "mono",
+  base_size = 11,
+  strip_text_family = base_family,
+  strip_text_size = 12,
+  plot_title_family = "mono",
+  plot_title_size = 16,
+  plot_title_margin = 10,
+  subtitle_family = "mono",
+  subtitle_size = 12,
+  subtitle_margin = 15,
+  caption_family = "serif",
+  caption_size = 9,
+  caption_margin = 10,
+  axis_title_family = "serif",
+  axis_title_size = 9,
+  axis_title_just = "mm",
+  grid = TRUE,
+  axis = FALSE,
+  ticks = FALSE
+)
 }
 \arguments{
 \item{base_family}{base font family}
@@ -59,7 +72,5 @@ heavy credits for influencing the theme function
 go to @hrbrmstr (Bob Rudis)
 }
 \details{
-Proper display of the theme requires installing Oswald & Oxygen fonts unless you change the font parameters
-
 \url{https://www.google.com/fonts}
 }
