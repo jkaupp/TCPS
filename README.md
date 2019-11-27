@@ -1,9 +1,8 @@
 
 # Teaching Culture Perception Survey (TCPS) Project
 
-<!-- badges: start --> [![Travis build
-status](https://travis-ci.org/jkaupp/tcps.svg?branch=master)](https://travis-ci.org/jkaupp/tcps)
-<!-- badges: end -->
+[![Build
+Status](https://travis-ci.org/jkaupp/tcps.svg?branch=master)](https://travis-ci.org/jkaupp/tcps)
 
 The goal of tcps package is to provide functionality to tidy and
 visualize the results of running the teaching culture perception survey
