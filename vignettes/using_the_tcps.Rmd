@@ -60,11 +60,11 @@ if ("devtools" %in% rownames(installed.packages())) {
 
 In order to properly read and process the data across many different survey platforms and potential edits made by institutions some standardized elements needed to be in place.  The questions in the TCPS comprise 6 individual levers, and each of those questions need to be clearly identified.  To do so this package looks to identify each TCPS question by a unique identifier, shown below. 
 
-![](item_coding.png)
+![](../vignettes/item_coding.png)
 
 These can either be placed within the survey platform as a question number (qualtrics, survey monkey, survey gizmo) or they can be added as the column header after the data has been exported to an excel file, as shown in the image below.  
 
-![](excel_header.png)
+![](../vignettes/excel_header.png)
 
 Failure to do so will render this program unable to properly determine the items that comprise the levers.  Reading data that is not properly tagged will result in an error, and the functions provided in this package will not work.  
 
