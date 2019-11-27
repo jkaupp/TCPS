@@ -8,3 +8,7 @@
 ^doc$
 ^Meta$
 ^\.travis\.yml$
+^_pkgdown\.yaml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

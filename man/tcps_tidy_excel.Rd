@@ -4,10 +4,12 @@
 \alias{tcps_tidy_excel}
 \title{Read the TCPS from a qualtrics export file and transform the data into a tidy format}
 \usage{
-tcps_tidy_excel(file)
+tcps_tidy_excel(file, name = NULL)
 }
 \arguments{
 \item{file}{full file path to an excel file exported from the survey system}
+
+\item{name}{used for tcpsGUI to properly name the file.}
 }
 \value{
 a tidy data frame containing only TCPS data, excludes all additional questions added to the survey.

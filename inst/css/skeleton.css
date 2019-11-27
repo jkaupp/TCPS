@@ -24,40 +24,9 @@
 - Clearing
 - Media Queries
 */
-@import url('https://fonts.googleapis.com/css?family=Lobster+Two|Raleway');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
-/* Pen Title */
-.pen {
-  font-family: 'Lobster Two';
-  color: #FFFFFF;
-  font-size: 4.0rem;
-}
-
-.pen_little {
-  font-family: 'Lobster Two';
-  color: #000000;
-  font-size: 2.0rem;
-}
-
-.pen_sub {
-  font-size: 1.5rem;
-   color: #FFFFFF;
-   display: inline-flex;
-   align-items: center;
-}
-
-.pen_header {
-  display: inline-flex;
-  align-items: center;
-}
-
-/* Custom Classes */
-.pen_button {
-  width: 250px;
-  /*color: #FFF;
-  background-color: #ff0000;
-  border-color: #ff0000; */
-}
 
 
 /* Base Styles
@@ -248,7 +217,7 @@ ol ul {
   margin: 1.5rem 0 1.5rem 3rem;
   font-size: 90%; }
 li {
-  margin-bottom: 0rem; } 
+  margin-bottom: 0rem; }
 
 
 /* Code

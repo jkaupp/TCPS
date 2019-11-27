@@ -4,12 +4,14 @@
 \alias{tcps_lever_scale}
 \title{Visualize the likert scale items comprising a lever}
 \usage{
-tcps_lever_scale(x, choice, name = "University Name")
+tcps_lever_scale(x, choice, group = NULL, name = "University Name")
 }
 \arguments{
 \item{x}{the input tidy tcps data frame}
 
 \item{choice}{the short name for the lever scale}
+
+\item{group}{one of 'faculty', 'staff', 'student or NULL to plot all groups}
 
 \item{name}{name of the institution}
 }

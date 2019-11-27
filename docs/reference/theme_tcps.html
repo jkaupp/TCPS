@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -130,14 +130,27 @@ heavy credits for influencing the theme function
 go to @hrbrmstr (Bob Rudis)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>theme_tcps</span>(<span class='kw'>base_family</span> <span class='kw'>=</span> <span class='st'>"mono"</span>, <span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>11</span>,
-  <span class='kw'>strip_text_family</span> <span class='kw'>=</span> <span class='no'>base_family</span>, <span class='kw'>strip_text_size</span> <span class='kw'>=</span> <span class='fl'>12</span>,
-  <span class='kw'>plot_title_family</span> <span class='kw'>=</span> <span class='st'>"mono"</span>, <span class='kw'>plot_title_size</span> <span class='kw'>=</span> <span class='fl'>16</span>,
-  <span class='kw'>plot_title_margin</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>subtitle_family</span> <span class='kw'>=</span> <span class='st'>"mono"</span>,
-  <span class='kw'>subtitle_size</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>subtitle_margin</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>caption_family</span> <span class='kw'>=</span> <span class='st'>"serif"</span>,
-  <span class='kw'>caption_size</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>caption_margin</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>axis_title_family</span> <span class='kw'>=</span> <span class='st'>"serif"</span>,
-  <span class='kw'>axis_title_size</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>axis_title_just</span> <span class='kw'>=</span> <span class='st'>"mm"</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>axis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>theme_tcps</span>(
+  <span class='kw'>base_family</span> <span class='kw'>=</span> <span class='st'>"mono"</span>,
+  <span class='kw'>base_size</span> <span class='kw'>=</span> <span class='fl'>11</span>,
+  <span class='kw'>strip_text_family</span> <span class='kw'>=</span> <span class='no'>base_family</span>,
+  <span class='kw'>strip_text_size</span> <span class='kw'>=</span> <span class='fl'>12</span>,
+  <span class='kw'>plot_title_family</span> <span class='kw'>=</span> <span class='st'>"mono"</span>,
+  <span class='kw'>plot_title_size</span> <span class='kw'>=</span> <span class='fl'>16</span>,
+  <span class='kw'>plot_title_margin</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>subtitle_family</span> <span class='kw'>=</span> <span class='st'>"mono"</span>,
+  <span class='kw'>subtitle_size</span> <span class='kw'>=</span> <span class='fl'>12</span>,
+  <span class='kw'>subtitle_margin</span> <span class='kw'>=</span> <span class='fl'>15</span>,
+  <span class='kw'>caption_family</span> <span class='kw'>=</span> <span class='st'>"serif"</span>,
+  <span class='kw'>caption_size</span> <span class='kw'>=</span> <span class='fl'>9</span>,
+  <span class='kw'>caption_margin</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>axis_title_family</span> <span class='kw'>=</span> <span class='st'>"serif"</span>,
+  <span class='kw'>axis_title_size</span> <span class='kw'>=</span> <span class='fl'>9</span>,
+  <span class='kw'>axis_title_just</span> <span class='kw'>=</span> <span class='st'>"mm"</span>,
+  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>axis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ticks</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,8 +236,7 @@ go to @hrbrmstr (Bob Rudis)</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Proper display of the theme requires installing Oswald &amp; Oxygen fonts unless you change the font parameters</p>
-<p><a href='https://www.google.com/fonts'>https://www.google.com/fonts</a></p>
+    <p><a href='https://www.google.com/fonts'>https://www.google.com/fonts</a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

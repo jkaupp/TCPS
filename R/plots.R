@@ -18,7 +18,7 @@ likert_scale <- function(x, choice) {
   title <- sprintf("%s (%s)", type, counts)
 
   ggplot2::update_geom_defaults("bar", list(colour = "grey30", size = 0.15))
-  ggplot2::update_geom_defaults("text", list(family = "Lato"))
+  #ggplot2::update_geom_defaults("text", list(family = "Lato"))
 
  graphics::plot(scale_bar, colors = viridisLite::viridis(5, option = "cividis"), text.size = 4, plot.percent.neutral = FALSE, panel.arrange = "v", legend.position = "none") +
     theme_tcps(grid = FALSE) +
@@ -40,7 +40,7 @@ likert_scale <- function(x, choice) {
 #' @param x the input tidy tcps data frame
 #' @param choice the short name for the lever scale
 #' @param name name of the institution
-#' @param group one of `c('faculty', 'staff', 'student)` or NULL to plot all groups
+#' @param group one of 'faculty', 'staff', 'student or NULL to plot all groups
 #'
 #' @return nify plot
 #' @export
@@ -50,7 +50,7 @@ tcps_lever_scale <- function(x, choice, group = NULL, name = "University Name") 
 
     if(group != "all") {
 
-      x <- dplyr::filter(x, survey == group)
+      x <- dplyr::filter(x, .data$survey == group)
     }
 
   }
