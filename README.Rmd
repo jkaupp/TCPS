@@ -35,7 +35,7 @@ To recap:
 You can install tcps from GitHub, by first installing and loading the `devtools` package
 
 ```{r gh-installation, eval = FALSE}
-install.packages("devtools")
+install.packages("remotes")
 
 remotes::install_github("jkaupp/tcps")
 ```

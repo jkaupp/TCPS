@@ -30,7 +30,7 @@ You can install tcps from GitHub, by first installing and loading the
 `devtools` package
 
 ``` r
-install.packages("devtools")
+install.packages("remotes")
 
 remotes::install_github("jkaupp/tcps")
 ```
