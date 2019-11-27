@@ -23,9 +23,15 @@ ui <- shiny::navbarPage("Teaching Culture Perception Survey", inverse = TRUE, he
                                         ),
                                         shiny::mainPanel(shiny::plotOutput("plots", height = "1000px", width = "100%"))
 
-                                        )
+                                        ),
 
-                        #shiny::tabPanel("Report")
+                        shiny::tabPanel("Report",
+                                        shiny::sidebarPanel(width = 3,
+                                                            shiny::uiOutput("inst_name2"),
+                                                            shiny::uiOutput("file_type"),
+                                                            shiny::uiOutput("download_report")
+
+                                        ))
 )
 
 
@@ -55,17 +61,17 @@ server <- function(input, output) {
 
   output$plots <- shiny::renderPlot({
 
-    req(input$data_in, input$lever_choice, input$inst_name)
+    shiny::req(input$data_in, input$lever_choice, input$inst_name)
 
     if (input$plot == "lever") {
 
-      req(input$aggregate)
+      shiny::req(input$aggregate)
 
       tcps_lever_ridgeline(data(), lever = input$lever_choice, name = input$inst_name, aggregate = as.logical(input$aggregate))
 
     } else if (input$plot == "scale") {
 
-      req(input$groups)
+      shiny::req(input$groups)
 
       tcps_lever_scale(data(), choice = input$lever_choice, name = input$inst_name, group = input$groups)
     }
@@ -74,7 +80,7 @@ server <- function(input, output) {
 
   })
 
-  output$inst_name <- renderUI({
+  output$inst_name <- shiny::renderUI({
 
     shiny::req(input$data_in)
 
@@ -82,8 +88,16 @@ server <- function(input, output) {
 
   })
 
+  output$inst_name2 <- shiny::renderUI({
 
-  output$aggregate <- renderUI({
+    shiny::req(input$data_in)
+
+    shiny::textInput(inputId = "inst_name2", label = "Enter Institution name")
+
+  })
+
+
+  output$aggregate <- shiny::renderUI({
 
     shiny::req(input$data_in, input$plot)
 
@@ -95,7 +109,7 @@ server <- function(input, output) {
 
   })
 
-  output$groups <- renderUI({
+  output$groups <- shiny::renderUI({
 
     shiny::req(input$data_in, input$plot)
 
@@ -107,9 +121,17 @@ server <- function(input, output) {
 
   })
 
+  output$file_type <- shiny::renderUI({
+
+    shiny::req(input$data_in)
+
+      shiny::selectInput(inputId = "file_ext", label = "Select output type", choices = c("", "pdf", "html", "docx"))
+
+  })
 
 
-  output$lever_choice <- renderUI({
+
+  output$lever_choice <- shiny::renderUI({
 
     shiny::req(input$data_in)
 
@@ -133,9 +155,42 @@ server <- function(input, output) {
   })
 
 
+  output$download_report <- shiny::renderUI({
+    shiny::req(input$data_in, input$inst_name2, input$file_ext)
+    shiny::downloadButton("report", "Download TCPS Report")
+  })
+
+  output$report <- shiny::downloadHandler(
+
+    filename <- sprintf("TCPS Lever Report %s.%s", input$inst_name2, input$file_ext),
+
+    content <- function(file) {
+
+      template <- file.path("inst/templates/shiny_tcps_report_template.Rmd")
+
+      parameters <- list(name = input$inst_name2)
+
+      format <- switch(input$file_ext,
+                       html = rmarkdown::html_document(),
+                       word = rmarkdown::word_document(),
+                       pdf = rmarkdown::pdf_document())
+
+      # Use rmarkdown::render to produce a pdf report
+      rmarkdown::render(input = template,
+                        output_format = format,
+                        output_file = file,
+                        params = parameters,
+                        clean = TRUE)
+
+    }
+  )
+
 }
 
 
+#' Run the TCPS GUI to read, visualize and report on the data
+#'
+#' @export
 tcps_gui <- function() {
   shiny::shinyApp(ui = ui, server = server)
   }

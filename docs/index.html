@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visualize the Teaching Culture Perception Survey • tcps</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -82,6 +82,8 @@
 <div id="teaching-culture-perception-survey-tcps-project" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#teaching-culture-perception-survey-tcps-project" class="anchor"></a>Teaching Culture Perception Survey (TCPS) Project</h1></div>
+<!-- badges: start -->
+
 <p>The goal of tcps package is to provide functionality to tidy and visualize the results of running the teaching culture perception survey at an institution.</p>
 </div>
 <div id="using-the-tcps-package" class="section level1">
@@ -126,23 +128,23 @@
 <a class="sourceLine" id="cb3-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tcps_data)</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; # A tibble: 6 x 42</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;   part_num scale survey lever1 lever1_q1 lever1_q2 lever1_q3 lever1_q4</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 1        1 agre… staff   NA           NA        NA        NA        NA</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 2        1 impo… staff   NA           NA        NA        NA        NA</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 3        2 agre… staff    3.33         4         4         4         3</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 4        2 impo… staff   NA           NA        NA        NA        NA</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 5        3 agre… staff   NA           NA        NA        NA        NA</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; 6        3 impo… staff    4.5          4         5         4         4</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; # … with 34 more variables: lever1_q5 &lt;dbl&gt;, lever1_q6 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; #   lever2 &lt;dbl&gt;, lever2_q2 &lt;dbl&gt;, lever2_q3 &lt;dbl&gt;, lever2_q4 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; #   lever2_q5 &lt;dbl&gt;, lever3 &lt;dbl&gt;, lever3_q1 &lt;dbl&gt;, lever3_q3 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; #   lever3_q4 &lt;dbl&gt;, lever3_q5 &lt;dbl&gt;, lever3_q6 &lt;dbl&gt;, lever3_q7 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; #   lever4 &lt;dbl&gt;, lever4_q1 &lt;dbl&gt;, lever4_q2 &lt;dbl&gt;, lever4_q3 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; #   lever4_q4 &lt;dbl&gt;, lever4_q5 &lt;dbl&gt;, lever4_q6 &lt;dbl&gt;, lever5 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; #   lever5_q1 &lt;dbl&gt;, lever5_q2 &lt;dbl&gt;, lever5_q3 &lt;dbl&gt;, lever5_q4 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; #   lever5_q5 &lt;dbl&gt;, lever5_q6 &lt;dbl&gt;, lever6 &lt;dbl&gt;, lever6_q1 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; #   lever6_q2 &lt;dbl&gt;, lever6_q3 &lt;dbl&gt;, lever6_q4 &lt;dbl&gt;, lever6_q6 &lt;dbl&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;   part_num scale survey lever1 lever1_q1 lever1_q2 lever1_q3 lever1_q4 lever1_q5</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 1        1 agre… staff   NA           NA        NA        NA        NA        NA</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 2        1 impo… staff   NA           NA        NA        NA        NA        NA</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 3        2 agre… staff    3.33         4         4         4         3         2</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; 4        2 impo… staff   NA           NA        NA        NA        NA        NA</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; 5        3 agre… staff   NA           NA        NA        NA        NA        NA</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; 6        3 impo… staff    4.5          4         5         4         4         5</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; # … with 33 more variables: lever1_q6 &lt;dbl&gt;, lever2 &lt;dbl&gt;, lever2_q2 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; #   lever2_q3 &lt;dbl&gt;, lever2_q4 &lt;dbl&gt;, lever2_q5 &lt;dbl&gt;, lever3 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; #   lever3_q1 &lt;dbl&gt;, lever3_q3 &lt;dbl&gt;, lever3_q4 &lt;dbl&gt;, lever3_q5 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt; #   lever3_q6 &lt;dbl&gt;, lever3_q7 &lt;dbl&gt;, lever4 &lt;dbl&gt;, lever4_q1 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt; #   lever4_q2 &lt;dbl&gt;, lever4_q3 &lt;dbl&gt;, lever4_q4 &lt;dbl&gt;, lever4_q5 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt; #   lever4_q6 &lt;dbl&gt;, lever5 &lt;dbl&gt;, lever5_q1 &lt;dbl&gt;, lever5_q2 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt; #   lever5_q3 &lt;dbl&gt;, lever5_q4 &lt;dbl&gt;, lever5_q5 &lt;dbl&gt;, lever5_q6 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; #   lever6 &lt;dbl&gt;, lever6_q1 &lt;dbl&gt;, lever6_q2 &lt;dbl&gt;, lever6_q3 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt; #   lever6_q4 &lt;dbl&gt;, lever6_q6 &lt;dbl&gt;</span></a></code></pre></div>
 </div>
 <div id="visualizing-levers-scales" class="section level3">
 <h3 class="hasAnchor">
@@ -163,27 +165,27 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/tcps_summary_stats.html">tcps_summary_stats</a></span>(tcps_data)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; # A tibble: 10 x 42</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; # Groups:   scale, survey [2]</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;    scale survey measure lever1 lever1_q1 lever1_q2 lever1_q3 lever1_q4</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  1 agre… staff  mean     3.52      3.75      3.83      3.42      3.71 </span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  2 agre… staff  median   3.67      4         4         3         3.5  </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  3 agre… staff  n       13         5         6         6         5    </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  4 agre… staff  sd       0.638     0.989     1.52      1.10      0.999</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  5 agre… staff  sem      0.177     0.442     0.622     0.449     0.447</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  6 impo… staff  mean     4.37      4.5       4.44      4.46      4.23 </span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  7 impo… staff  median   4.42      4.5       5         5         4    </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  8 impo… staff  n       13         4         5         3         4    </span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  9 impo… staff  sd       0.510     0.648     1.00      0.647     0.863</span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; 10 impo… staff  sem      0.141     0.324     0.449     0.373     0.431</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; # … with 34 more variables: lever1_q5 &lt;dbl&gt;, lever1_q6 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; #   lever2 &lt;dbl&gt;, lever2_q2 &lt;dbl&gt;, lever2_q3 &lt;dbl&gt;, lever2_q4 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; #   lever2_q5 &lt;dbl&gt;, lever3 &lt;dbl&gt;, lever3_q1 &lt;dbl&gt;, lever3_q3 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; #   lever3_q4 &lt;dbl&gt;, lever3_q5 &lt;dbl&gt;, lever3_q6 &lt;dbl&gt;, lever3_q7 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; #   lever4 &lt;dbl&gt;, lever4_q1 &lt;dbl&gt;, lever4_q2 &lt;dbl&gt;, lever4_q3 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; #   lever4_q4 &lt;dbl&gt;, lever4_q5 &lt;dbl&gt;, lever4_q6 &lt;dbl&gt;, lever5 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt; #   lever5_q1 &lt;dbl&gt;, lever5_q2 &lt;dbl&gt;, lever5_q3 &lt;dbl&gt;, lever5_q4 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt; #   lever5_q5 &lt;dbl&gt;, lever5_q6 &lt;dbl&gt;, lever6 &lt;dbl&gt;, lever6_q1 &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">#&gt; #   lever6_q2 &lt;dbl&gt;, lever6_q3 &lt;dbl&gt;, lever6_q4 &lt;dbl&gt;, lever6_q6 &lt;dbl&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;    scale survey measure lever1 lever1_q1 lever1_q2 lever1_q3 lever1_q4 lever1_q5</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  1 agre… staff  mean     3.52      3.75      3.83      3.42      3.71      2.96 </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  2 agre… staff  median   3.67      4         4         3         3.5       3    </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;  3 agre… staff  n       13         5         6         6         5         6    </span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;  4 agre… staff  sd       0.638     0.989     1.52      1.10      0.999     1.12 </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  5 agre… staff  sem      0.177     0.442     0.622     0.449     0.447     0.458</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  6 impo… staff  mean     4.37      4.5       4.44      4.46      4.23      4.42 </span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  7 impo… staff  median   4.42      4.5       5         5         4         5    </span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  8 impo… staff  n       13         4         5         3         4         4    </span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  9 impo… staff  sd       0.510     0.648     1.00      0.647     0.863     0.809</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; 10 impo… staff  sem      0.141     0.324     0.449     0.373     0.431     0.404</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; # … with 33 more variables: lever1_q6 &lt;dbl&gt;, lever2 &lt;dbl&gt;, lever2_q2 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt; #   lever2_q3 &lt;dbl&gt;, lever2_q4 &lt;dbl&gt;, lever2_q5 &lt;dbl&gt;, lever3 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; #   lever3_q1 &lt;dbl&gt;, lever3_q3 &lt;dbl&gt;, lever3_q4 &lt;dbl&gt;, lever3_q5 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; #   lever3_q6 &lt;dbl&gt;, lever3_q7 &lt;dbl&gt;, lever4 &lt;dbl&gt;, lever4_q1 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; #   lever4_q2 &lt;dbl&gt;, lever4_q3 &lt;dbl&gt;, lever4_q4 &lt;dbl&gt;, lever4_q5 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; #   lever4_q6 &lt;dbl&gt;, lever5 &lt;dbl&gt;, lever5_q1 &lt;dbl&gt;, lever5_q2 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt; #   lever5_q3 &lt;dbl&gt;, lever5_q4 &lt;dbl&gt;, lever5_q5 &lt;dbl&gt;, lever5_q6 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt; #   lever6 &lt;dbl&gt;, lever6_q1 &lt;dbl&gt;, lever6_q2 &lt;dbl&gt;, lever6_q3 &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">#&gt; #   lever6_q4 &lt;dbl&gt;, lever6_q6 &lt;dbl&gt;</span></a></code></pre></div>
 </div>
 <div id="reporting" class="section level2">
 <h2 class="hasAnchor">
@@ -193,6 +195,11 @@
 <a class="sourceLine" id="cb7-2" data-line-number="2">path &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/basename.html">dirname</a></span>(<span class="kw"><a href="reference/tcps_sample.html">tcps_sample</a></span>(<span class="st">"faculty_sample.xlsx"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="reference/tcps_report.html">tcps_report</a></span>(<span class="dt">path_to_data =</span> path, <span class="dt">name_of_school =</span> <span class="st">"Prestigious Institution"</span>, <span class="dt">format =</span> <span class="st">"word"</span>)</a></code></pre></div>
+</div>
+<div id="using-the-gui" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-gui" class="anchor"></a>Using the GUI</h2>
+<p>To help with those new to R, a GUI interface application (built with the <code>shiny</code> package) can be used by calling <code><a href="reference/tcps_gui.html">tcps_gui()</a></code> at the command line after loading the <code>tcps</code> package.</p>
 </div>
 </div>
 
@@ -222,7 +229,13 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/jkaupp/tcps"><img src="https://travis-ci.org/jkaupp/tcps.svg?branch=master" alt="Travis build status"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

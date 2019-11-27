@@ -3,7 +3,4 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   using_the_tcps: using_the_tcps.html
-urls:
-  reference: http://jkaupp.github.io/tcps/reference
-  article: http://jkaupp.github.io/tcps/articles
 

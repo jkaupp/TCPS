@@ -4,8 +4,13 @@
 \alias{tcps_lever_ridgeline}
 \title{Visualize TCPS lever data as a ridline plot contrasting agreement and importance}
 \usage{
-tcps_lever_ridgeline(x, name = "University Name", lever = NULL,
-  pal = pal_one, aggregate = FALSE)
+tcps_lever_ridgeline(
+  x,
+  name = "University Name",
+  lever = NULL,
+  pal = pal_one,
+  aggregate = FALSE
+)
 }
 \arguments{
 \item{x}{input tidy TCPS data frame}
